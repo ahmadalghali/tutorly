@@ -16,10 +16,10 @@ body {
 }
 
 input {
-	@apply bg-gray-200 p-3;
+	@apply bg-gray-200 focus:outline-none;
 }
 .cardify {
-	@apply bg-white shadow-xl rounded-2xl p-4;
+	@apply bg-white shadow-lg rounded-2xl p-4;
 }
 
 .router {

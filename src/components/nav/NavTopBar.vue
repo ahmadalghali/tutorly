@@ -5,11 +5,10 @@
             <img src="@/assets/logo-trans.png" class="h-16" />
             <!-- <p class="font-semibold text-2xl">LTA</p> -->
         </div>
-        <TransitionGroup>
-            <div
-                class="mb-10 mr-5"
-                enter-active-class="animated rotateIn"
-                leave-active-class="animated rotateOut"
+        <div class="mb-10 mr-5">
+            <TransitionGroup
+                enter-active-class="animate__animated animate__rotateIn"
+                leave-active-class="animate__animated animate__rotateOut"
             >
                 <font-awesome-icon
                     v-if="!sideBarOpen"
@@ -25,8 +24,8 @@
                     class="menu-btn absolute"
                     @click="$emit('sideBarClosed')"
                 />
-            </div>
-        </TransitionGroup>
+            </TransitionGroup>
+        </div>
     </div>
 </template>
 <script setup lang="ts">

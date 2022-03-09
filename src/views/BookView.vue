@@ -3,38 +3,46 @@
 		<div class="text-center text-3xl">Book</div>
 
 		<form @submit.prevent class="mt-10">
-			<Transition enter-active-class="animated fadeInLeft" appear>
-				<div class="how-it-works mb-10 bg-white shadow-xl rounded-2xl p-4">
-					<p class="text-xl font-medium">
-						<i class="fas fa-lightbulb text-yellow-400 mr-1"></i> How it works:
-					</p>
-					<br />
-					<p class="font-light text-base px-2">
-						Select your desired
-						<span class="font-medium">Subject + Level</span> at the times that
-						you prefer and we'll match you with the prefect tutor, just for you!
-					</p>
-				</div>
-			</Transition>
+			<div>
+				<Transition enter-active-class="animate__animated animate__fadeInLeft" appear>
+					<div class="how-it-works mb-10 bg-white shadow-xl rounded-2xl p-4">
+						<p class="text-xl font-medium">
+							<font-awesome-icon icon="lightbulb" class="text-yellow-400 mr-1" />How it works:
+						</p>
+						<br />
+						<p class="font-light text-base px-2">
+							Select your desired
+							<span class="font-medium">Subject + Level</span> at the times that
+							you prefer and we'll match you with the prefect tutor, just for you!
+						</p>
+					</div>
+				</Transition>
+			</div>
 
-			<label for="subject" class="text-2xl font-medium">Subject</label>
-			<select name="subject" id="subject">
-				<option disabled selected>Select</option>
-				<option value="Maths">Maths</option>
-				<option value="Physics">Physics</option>
-				<option value="Chemistry">Chemistry</option>
-				<option value="Biology">Biology</option>
-				<option value="English">English</option>
-			</select>
+			<!-- <div class="grid justify-items-start"> -->
+			<div>
+				<label for="subject" class="text-2xl font-medium">Subject</label>
+				<select name="subject" id="subject">
+					<option disabled selected>Select</option>
+					<option value="Maths">Maths</option>
+					<option value="Physics">Physics</option>
+					<option value="Chemistry">Chemistry</option>
+					<option value="Biology">Biology</option>
+					<option value="English">English</option>
+				</select>
+			</div>
 
-			<label for="level" class="text-2xl font-medium mt-10">Level</label>
-			<select name="level" id="level">
-				<option disabled selected>Select</option>
-				<option value="Primary">Primary</option>
-				<option value="KS3">KS3</option>
-				<option value="GCSE">GCSE</option>
-				<option value="A-Levels">A-Levels</option>
-			</select>
+			<div class="mt-10">
+				<label for="level" class="text-2xl font-medium mt-10">Level</label>
+				<select name="level" id="level">
+					<option disabled selected>Select</option>
+					<option value="Primary">Primary</option>
+					<option value="KS3">KS3</option>
+					<option value="GCSE">GCSE</option>
+					<option value="A-Levels">A-Levels</option>
+				</select>
+			</div>
+			<!-- </div> -->
 
 			<div class="text-2xl font-medium mt-14">Availability</div>
 			<div class="availability overflow-auto">
@@ -146,8 +154,7 @@
 			</div>
 
 			<button class="btn w-full bg-amber-400 h-12 mt-10 text-gray-800" @click="matchMe">
-				<i class="fas fa-search"></i>
-				Match Me
+				<font-awesome-icon icon="search" />Match Me
 			</button>
 		</form>
 	</div>
@@ -171,16 +178,13 @@
 // 	console.log("redirecting to login...");
 // }
 
+
 function displayLoginModal () { }
 </script>
 
 <style scoped>
 .how-it-works {
 	--animate-duration: 0.5s;
-}
-
-select {
-	@apply mt-2 p-3 w-80 rounded-md text-xl focus:outline-none shadow;
 }
 
 td input {
@@ -201,5 +205,9 @@ thead tr {
 
 thead tr th span {
 	@apply text-xs;
+}
+
+select {
+	@apply px-4 py-3 mt-3 text-xl bg-white rounded-md w-full focus:outline-none shadow;
 }
 </style>

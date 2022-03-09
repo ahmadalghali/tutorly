@@ -26,7 +26,7 @@
   </div>
 </template>
 
-<style scoped>
+<style>
 .btn {
   @apply text-lg rounded-lg font-semibold uppercase shadow-lg;
 }

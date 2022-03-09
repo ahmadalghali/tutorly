@@ -5,7 +5,7 @@
 			@sideBarOpened="sideBarOpen = true"
 			@sideBarClosed="sideBarOpen = false"
 		/>
-		<NavSideBar v-if="sideBarOpen" class="absolute right-0 z-50" />
+		<NavSideBar v-show="sideBarOpen" class="absolute right-0 z-50" />
 	</div>
 </template>
 <script setup lang="ts">

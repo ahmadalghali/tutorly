@@ -4,8 +4,8 @@
 
 <template>
 	<Transition
-		enter-active-class="animate__animated animate__tada"
-		leave-active-class="animate__animated animate__tada"
+		enter-active-class="animate__animated animate__slideInRight enter-duration"
+		leave-active-class="animate__animated animate__slideOutRight leave-duration"
 		appear
 	>
 		<div class="sidebar">
@@ -25,8 +25,14 @@
 
 <style scoped>
 .sidebar {
+	@apply h-screen bg-amber-400 w-3/4 float-right rounded-tl-xl flex flex-col text-left pt-10 border-l-2 border-t-2 border-amber-600;
+}
+
+.enter-duration {
 	--animate-duration: 0.5s;
-	@apply h-screen bg-amber-400 w-3/4 float-right rounded-tl-xl flex flex-col text-left pt-10;
+}
+.leave-duration {
+	--animate-duration: 0.3s;
 }
 .sidebar-item {
 	@apply text-2xl mb-10 focus:outline-none pl-10 active:bg-amber-300 text-amber-900 font-medium;
