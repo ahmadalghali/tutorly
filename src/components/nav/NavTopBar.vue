@@ -1,3 +1,12 @@
+<script setup lang="ts">
+import { useNavBar } from '@/stores/navbar'
+
+const navbarStore = useNavBar();
+// const props = defineProps({
+//     sideBarOpen: { type: Boolean, required: true },
+// });
+</script>
+
 <template>
     <div class="navbar px-10 py-4 flex items-center justify-between">
         <div class="flex items-center brand" @click="$router.push('/')">
@@ -11,28 +20,24 @@
                 leave-active-class="animate__animated animate__rotateOut"
             >
                 <font-awesome-icon
-                    v-if="!sideBarOpen"
+                    v-if="!navbarStore.isOpen"
                     key="bars"
                     icon="bars"
                     class="menu-btn absolute"
-                    @click="$emit('sideBarOpened')"
+                    @click="navbarStore.open()"
                 />
                 <font-awesome-icon
                     v-else
                     key="close"
                     icon="times"
                     class="menu-btn absolute"
-                    @click="$emit('sideBarClosed')"
+                    @click="navbarStore.close()"
                 />
             </TransitionGroup>
         </div>
     </div>
 </template>
-<script setup lang="ts">
-const props = defineProps({
-    sideBarOpen: { type: Boolean, required: true },
-});
-</script>
+
 <style scoped>
 .menu-btn {
     --animate-duration: 0.5s;

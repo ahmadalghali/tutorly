@@ -1,29 +1,22 @@
-<template>
-	<div class="sticky">
-		<NavTopBar
-			:sideBarOpen="sideBarOpen"
-			@sideBarOpened="sideBarOpen = true"
-			@sideBarClosed="sideBarOpen = false"
-		/>
-		<NavSideBar v-show="sideBarOpen" class="absolute right-0 z-50" />
-	</div>
-</template>
 <script setup lang="ts">
 // import { EventBus } from "@/event-bus";
 import NavSideBar from "@/components/nav/NavSideBar.vue";
 import NavTopBar from "@/components/nav/NavTopBar.vue";
-import { ref, onBeforeMount } from "vue";
+// import { ref, onBeforeMount } from "vue";
+import { useNavBar } from '@/stores/navbar'
+import { onBeforeMount } from "vue";
 
-const sideBarOpen = ref(false);
+const navbarStore = useNavBar();
 
-function closeNav () {
-	sideBarOpen.value = false;
-}
-
-// onBeforeMount(() => {
-// 	EventBus.$on("closeNav", closeNav());
-// }),
 </script>
+
+<template>
+	<div class="sticky">
+		<NavTopBar />
+	</div>
+	<NavSideBar v-show="navbarStore.isOpen" class="absolute right-0 z-50" />
+</template>
+
 
 <style scoped>
 /* .slide-enter-active, .slide-leave-active {

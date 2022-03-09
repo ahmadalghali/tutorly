@@ -10,7 +10,7 @@ import ChatView from "../views/ChatView.vue";
 import ProfileView from "../views/ProfileView.vue";
 import ModalBookingContactData from "@/components/modals/ModalBookingContactData.vue";
 
-// import { EventBus } from '@/event-bus.js'
+import { useNavBar } from "@/stores/navbar";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -68,9 +68,10 @@ const router = createRouter({
   ],
 });
 
-// router.beforeEach((to, from, next) => {
-//   EventBus.$emit('closeNav')
-//   next()
-// })
+router.beforeEach((to, from, next) => {
+  const navbarStore = useNavBar();
+  navbarStore.close();
+  next();
+});
 
 export default router;
