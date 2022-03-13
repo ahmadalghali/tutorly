@@ -2,7 +2,8 @@
   "name": "london-tuition-academy",
   "version": "0.0.0",
   "scripts": {
-    "dev": "vite",
+    "generate:dtos": "npx swagger-typescript-api -p http://localhost:3001/docs-json -o ./src/global -n api-types.ts --axios  --module-name-first-tag --responses --route-types ",
+    "dev": "npm run generate:dtos && vite",
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview --port 5050",
     "test:unit": "vitest --environment jsdom",
@@ -17,9 +18,13 @@
     "@fortawesome/free-regular-svg-icons": "^6.0.0",
     "@fortawesome/free-solid-svg-icons": "^6.0.0",
     "@fortawesome/vue-fontawesome": "^3.0.0-5",
+    "@vueuse/core": "^8.0.0",
+    "@vueuse/integrations": "^8.0.0",
+    "axios": "^0.26.1",
     "pinia": "^2.0.11",
     "vue": "^3.2.31",
-    "vue-router": "^4.0.12"
+    "vue-router": "^4.0.12",
+    "vue-toastification": "^2.0.0-rc.5"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.1.0",

@@ -1,6 +1,13 @@
 <script setup lang="ts">
+import { onMounted } from "vue";
 import { RouterLink, RouterView } from "vue-router";
 import NavBar from "./components/nav/NavBar.vue";
+
+onMounted(() => {
+	console.log("process.env.VUE_APP_BASE_URL :>> ", process.env.VUE_APP_BASE_URL);
+}),
+
+
 
 </script>
 <template>

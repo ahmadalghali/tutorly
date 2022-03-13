@@ -1,8 +1,8 @@
 const colors = require("tailwindcss/colors");
 
 module.exports = {
-  content: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
-  purge: ["./public/**/*.html", "./src/**/*.vue"],
+  // content: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
+  content: ["./public/**/*.html", "./src/**/*.vue"],
   theme: {
     container: {
       center: true,
@@ -27,7 +27,6 @@ module.exports = {
       orange: colors.orange,
       black: colors.black,
       white: colors.white,
-      gray: colors.trueGray,
       indigo: colors.indigo,
       rose: colors.rose,
       red: colors.red,

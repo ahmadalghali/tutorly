@@ -11,4 +11,15 @@
   .bg-primary {
     @apply bg-amber-400;
   }
+
+  /* FORM */
+
+  /* INPUT */
+  .g-input-text {
+    @apply mt-2 px-4 py-3 w-full rounded-xl text-xl shadow-md bg-white;
+  }
+
+  /* INPUT */
+
+  /* FORM */
 }

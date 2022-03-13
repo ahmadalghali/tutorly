@@ -154,7 +154,7 @@
 			</div>
 
 			<button class="btn w-full bg-amber-400 h-12 mt-10 text-gray-800" @click="matchMe">
-				<font-awesome-icon icon="search" />Match Me
+				<font-awesome-icon icon="search" class="mr-2" />Match Me
 			</button>
 		</form>
 	</div>
