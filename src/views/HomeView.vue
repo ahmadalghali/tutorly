@@ -1,7 +1,21 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div class="home">
+  <ion-page>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Tab 1</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content :fullscreen="true">
+      <ion-header collapse="condense">
+        <ion-toolbar>
+          <ion-title size="large">Tab 1</ion-title>
+        </ion-toolbar>
+      </ion-header>
+    </ion-content>
+  </ion-page>
+  <!-- <div class="home">
     <p class="mt-10">
       Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas impedit
       consequuntur doloremque nesciunt sit libero eaque fuga nam magnam
@@ -13,17 +27,23 @@
       <button
         class="btn-primary bg-primary text-amber-900 h-12 w-full"
         @click="$router.push('/book')"
-      >Book Now</button>
+      >
+        Book Now
+      </button>
       <button
         class="btn-primary bg-primary text-amber-900 h-12 w-full"
         @click="$router.push('/chat')"
-      >Start Chatting</button>
+      >
+        Start Chatting
+      </button>
       <button
         class="btn-primary bg-primary text-amber-900 h-12 w-full"
         @click="$router.push('/profile')"
-      >Profile</button>
+      >
+        Profile
+      </button>
     </div>
-  </div>
+  </div> -->
 </template>
 
 <style>

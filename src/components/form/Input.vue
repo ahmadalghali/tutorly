@@ -1,21 +1,19 @@
 <script setup lang="ts">
-
 const props = defineProps<{
-  type: string,
-  title: string,
-  value: string
-}>()
+  type: string;
+  title: string;
+  value: string;
+}>();
 
 const emit = defineEmits<{
-  (e: 'input', content: string): void
-}>()
+  (e: "input", content: string): void;
+}>();
 
-const content = props.value
+const content = props.value;
 
-function handleInput () {
-  emit('input', content)
+function handleInput() {
+  emit("input", content);
 }
-
 </script>
 
 <template>
@@ -29,6 +27,3 @@ function handleInput () {
     />
   </div>
 </template>
-
-
-

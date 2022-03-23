@@ -2,7 +2,7 @@
 import { onMounted, ref } from "vue";
 import { RouterLink, RouterView } from "vue-router";
 import NavBar from "./components/nav/NavBar.vue";
-import { ModalsContainer } from "vue-final-modal";
+// import { ModalsContainer } from "vue-final-modal";
 import { inject } from "vue";
 const $vfm: any = inject("$vfm");
 
@@ -17,15 +17,16 @@ function showLogoutModal() {
 
 // }
 </script>
+
 <template>
-  <div>
-    <div :class="$route.name == 'chat' ? '' : 'pb-20'">
-      <NavBar v-show="$route.name !== 'chat'" />
-      <button @click="showLogoutModal">open logout modal</button>
-      <RouterView class="router" :class="$route.name == 'chat' ? '' : 'px-4'" />
-    </div>
-    <modals-container></modals-container>
-  </div>
+  <ion-app :class="$route.name == 'chat' ? '' : 'pb-20'">
+    <NavBar v-show="$route.name !== 'chat'" />
+    <ion-router-outlet
+      class="router"
+      :class="$route.name == 'chat' ? '' : 'px-4'"
+    />
+    <!-- <modals-containner></modals-containner> -->
+  </ion-app>
 </template>
 
 <style>

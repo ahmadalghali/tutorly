@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Input from '@/components/form/Input.vue'
+import Input from "@/components/form/Input.vue";
 </script>
 
 <template>
@@ -20,18 +20,20 @@ import Input from '@/components/form/Input.vue'
           :to="{ name: 'terms-and-conditions' }"
           target="_blank"
           class="text-blue-600 underline"
-        >Terms and Conditions</router-link>.
+          >Terms and Conditions</router-link
+        >.
       </label>
     </div>
 
-    <button class="btn w-full bg-primary h-12 mt-10 text-gray-800">Register</button>
+    <button class="btn w-full bg-primary h-12 mt-10 text-gray-800">
+      Register
+    </button>
 
     <p class="text-lg mt-10">
       Already have an account?
-      <span
-        class="font-semibold underline"
-        @click="$router.push('login')"
-      >Login</span>
+      <span class="font-semibold underline" @click="$router.push('login')"
+        >Login</span
+      >
     </p>
   </div>
 </template>

@@ -1,5 +1,9 @@
 <template>
-  <Transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" appear>
+  <Transition
+    enter-active-class="animated fadeIn"
+    leave-active-class="animated fadeOut"
+    appear
+  >
     <div class="z-40 w-full h-full bg-opacity-50">
       <div class="modal">
         <div class="header">
@@ -9,7 +13,9 @@
 
         <div class="body"></div>
         <div v-if="actions" class="actions">
-          <button class="btn" v-for="(action, index) in actions" :key="index">{{ action }}</button>
+          <button class="btn" v-for="(action, index) in actions" :key="index">
+            {{ action }}
+          </button>
         </div>
       </div>
     </div>

@@ -98,6 +98,16 @@ export type CreateChatDto = object;
 
 export type UpdateChatDto = object;
 
+export interface CreateMessageDto {
+  text: string;
+  from: string;
+}
+
+export interface UpdateMessageDto {
+  text?: string;
+  from?: string;
+}
+
 export namespace Auth {
   /**
    * No description
@@ -603,11 +613,85 @@ export namespace Chat {
   }
 }
 
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, ResponseType } from "axios";
+export namespace Message {
+  /**
+   * No description
+   * @name MessageControllerCreate
+   * @request POST:/message
+   * @response `201` `string`
+   */
+  export namespace MessageControllerCreate {
+    export type RequestParams = {};
+    export type RequestQuery = {};
+    export type RequestBody = CreateMessageDto;
+    export type RequestHeaders = {};
+    export type ResponseBody = string;
+  }
+  /**
+   * No description
+   * @name MessageControllerFindAll
+   * @request GET:/message
+   * @response `200` `string`
+   */
+  export namespace MessageControllerFindAll {
+    export type RequestParams = {};
+    export type RequestQuery = {};
+    export type RequestBody = never;
+    export type RequestHeaders = {};
+    export type ResponseBody = string;
+  }
+  /**
+   * No description
+   * @name MessageControllerFindOne
+   * @request GET:/message/{id}
+   * @response `200` `string`
+   */
+  export namespace MessageControllerFindOne {
+    export type RequestParams = { id: string };
+    export type RequestQuery = {};
+    export type RequestBody = never;
+    export type RequestHeaders = {};
+    export type ResponseBody = string;
+  }
+  /**
+   * No description
+   * @name MessageControllerUpdate
+   * @request PATCH:/message/{id}
+   * @response `200` `string`
+   */
+  export namespace MessageControllerUpdate {
+    export type RequestParams = { id: string };
+    export type RequestQuery = {};
+    export type RequestBody = UpdateMessageDto;
+    export type RequestHeaders = {};
+    export type ResponseBody = string;
+  }
+  /**
+   * No description
+   * @name MessageControllerRemove
+   * @request DELETE:/message/{id}
+   * @response `200` `string`
+   */
+  export namespace MessageControllerRemove {
+    export type RequestParams = { id: string };
+    export type RequestQuery = {};
+    export type RequestBody = never;
+    export type RequestHeaders = {};
+    export type ResponseBody = string;
+  }
+}
+
+import axios, {
+  AxiosInstance,
+  AxiosRequestConfig,
+  AxiosResponse,
+  ResponseType,
+} from "axios";
 
 export type QueryParamsType = Record<string | number, any>;
 
-export interface FullRequestParams extends Omit<AxiosRequestConfig, "data" | "params" | "url" | "responseType"> {
+export interface FullRequestParams
+  extends Omit<AxiosRequestConfig, "data" | "params" | "url" | "responseType"> {
   /** set parameter to `true` for call `securityWorker` for this request */
   secure?: boolean;
   /** request path */
@@ -622,11 +706,15 @@ export interface FullRequestParams extends Omit<AxiosRequestConfig, "data" | "pa
   body?: unknown;
 }
 
-export type RequestParams = Omit<FullRequestParams, "body" | "method" | "query" | "path">;
+export type RequestParams = Omit<
+  FullRequestParams,
+  "body" | "method" | "query" | "path"
+>;
 
-export interface ApiConfig<SecurityDataType = unknown> extends Omit<AxiosRequestConfig, "data" | "cancelToken"> {
+export interface ApiConfig<SecurityDataType = unknown>
+  extends Omit<AxiosRequestConfig, "data" | "cancelToken"> {
   securityWorker?: (
-    securityData: SecurityDataType | null,
+    securityData: SecurityDataType | null
   ) => Promise<AxiosRequestConfig | void> | AxiosRequestConfig | void;
   secure?: boolean;
   format?: ResponseType;
@@ -645,8 +733,16 @@ export class HttpClient<SecurityDataType = unknown> {
   private secure?: boolean;
   private format?: ResponseType;
 
-  constructor({ securityWorker, secure, format, ...axiosConfig }: ApiConfig<SecurityDataType> = {}) {
-    this.instance = axios.create({ ...axiosConfig, baseURL: axiosConfig.baseURL || "" });
+  constructor({
+    securityWorker,
+    secure,
+    format,
+    ...axiosConfig
+  }: ApiConfig<SecurityDataType> = {}) {
+    this.instance = axios.create({
+      ...axiosConfig,
+      baseURL: axiosConfig.baseURL || "",
+    });
     this.secure = secure;
     this.format = format;
     this.securityWorker = securityWorker;
@@ -656,7 +752,10 @@ export class HttpClient<SecurityDataType = unknown> {
     this.securityData = data;
   };
 
-  private mergeRequestParams(params1: AxiosRequestConfig, params2?: AxiosRequestConfig): AxiosRequestConfig {
+  private mergeRequestParams(
+    params1: AxiosRequestConfig,
+    params2?: AxiosRequestConfig
+  ): AxiosRequestConfig {
     return {
       ...this.instance.defaults,
       ...params1,
@@ -678,7 +777,7 @@ export class HttpClient<SecurityDataType = unknown> {
           ? property
           : typeof property === "object" && property !== null
           ? JSON.stringify(property)
-          : `${property}`,
+          : `${property}`
       );
       return formData;
     }, new FormData());
@@ -701,7 +800,12 @@ export class HttpClient<SecurityDataType = unknown> {
     const requestParams = this.mergeRequestParams(params, secureParams);
     const responseFormat = (format && this.format) || void 0;
 
-    if (type === ContentType.FormData && body && body !== null && typeof body === "object") {
+    if (
+      type === ContentType.FormData &&
+      body &&
+      body !== null &&
+      typeof body === "object"
+    ) {
       requestParams.headers.common = { Accept: "*/*" };
       requestParams.headers.post = {};
       requestParams.headers.put = {};
@@ -712,7 +816,9 @@ export class HttpClient<SecurityDataType = unknown> {
     return this.instance.request({
       ...requestParams,
       headers: {
-        ...(type && type !== ContentType.FormData ? { "Content-Type": type } : {}),
+        ...(type && type !== ContentType.FormData
+          ? { "Content-Type": type }
+          : {}),
         ...(requestParams.headers || {}),
       },
       params: query,
@@ -728,7 +834,9 @@ export class HttpClient<SecurityDataType = unknown> {
  * @version 1.0.0
  * @contact
  */
-export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDataType> {
+export class Api<
+  SecurityDataType extends unknown
+> extends HttpClient<SecurityDataType> {
   auth = {
     /**
      * No description
@@ -737,7 +845,10 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request POST:/auth/register
      * @response `201` `VerifyEmailResponse`
      */
-    authControllerRegister: (data: RegisterUserDto, params: RequestParams = {}) =>
+    authControllerRegister: (
+      data: RegisterUserDto,
+      params: RequestParams = {}
+    ) =>
       this.request<VerifyEmailResponse, any>({
         path: `/auth/register`,
         method: "POST",
@@ -877,7 +988,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request PATCH:/user/{id}
      * @response `200` `void`
      */
-    userControllerUpdate: (id: string, data: UpdateUserDto, params: RequestParams = {}) =>
+    userControllerUpdate: (
+      id: string,
+      data: UpdateUserDto,
+      params: RequestParams = {}
+    ) =>
       this.request<void, any>({
         path: `/user/${id}`,
         method: "PATCH",
@@ -972,7 +1087,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request PATCH:/tutor/{id}
      * @response `200` `string`
      */
-    tutorControllerUpdate: (id: string, data: UpdateTutorDto, params: RequestParams = {}) =>
+    tutorControllerUpdate: (
+      id: string,
+      data: UpdateTutorDto,
+      params: RequestParams = {}
+    ) =>
       this.request<string, any>({
         path: `/tutor/${id}`,
         method: "PATCH",
@@ -1005,7 +1124,10 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request POST:/student
      * @response `201` `string`
      */
-    studentControllerCreate: (data: CreateStudentDto, params: RequestParams = {}) =>
+    studentControllerCreate: (
+      data: CreateStudentDto,
+      params: RequestParams = {}
+    ) =>
       this.request<string, any>({
         path: `/student`,
         method: "POST",
@@ -1052,7 +1174,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request PATCH:/student/{id}
      * @response `200` `string`
      */
-    studentControllerUpdate: (id: string, data: UpdateStudentDto, params: RequestParams = {}) =>
+    studentControllerUpdate: (
+      id: string,
+      data: UpdateStudentDto,
+      params: RequestParams = {}
+    ) =>
       this.request<string, any>({
         path: `/student/${id}`,
         method: "PATCH",
@@ -1132,7 +1258,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request PATCH:/admin/{id}
      * @response `200` `string`
      */
-    adminControllerUpdate: (id: string, data: UpdateAdminDto, params: RequestParams = {}) =>
+    adminControllerUpdate: (
+      id: string,
+      data: UpdateAdminDto,
+      params: RequestParams = {}
+    ) =>
       this.request<string, any>({
         path: `/admin/${id}`,
         method: "PATCH",
@@ -1165,7 +1295,10 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request POST:/booking
      * @response `201` `string`
      */
-    bookingControllerCreate: (data: CreateBookingDto, params: RequestParams = {}) =>
+    bookingControllerCreate: (
+      data: CreateBookingDto,
+      params: RequestParams = {}
+    ) =>
       this.request<string, any>({
         path: `/booking`,
         method: "POST",
@@ -1212,7 +1345,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request PATCH:/booking/{id}
      * @response `200` `string`
      */
-    bookingControllerUpdate: (id: string, data: UpdateBookingDto, params: RequestParams = {}) =>
+    bookingControllerUpdate: (
+      id: string,
+      data: UpdateBookingDto,
+      params: RequestParams = {}
+    ) =>
       this.request<string, any>({
         path: `/booking/${id}`,
         method: "PATCH",
@@ -1292,7 +1429,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request PATCH:/chat/{id}
      * @response `200` `string`
      */
-    chatControllerUpdate: (id: string, data: UpdateChatDto, params: RequestParams = {}) =>
+    chatControllerUpdate: (
+      id: string,
+      data: UpdateChatDto,
+      params: RequestParams = {}
+    ) =>
       this.request<string, any>({
         path: `/chat/${id}`,
         method: "PATCH",
@@ -1312,6 +1453,93 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     chatControllerRemove: (id: string, params: RequestParams = {}) =>
       this.request<string, any>({
         path: `/chat/${id}`,
+        method: "DELETE",
+        format: "json",
+        ...params,
+      }),
+  };
+  message = {
+    /**
+     * No description
+     *
+     * @name MessageControllerCreate
+     * @request POST:/message
+     * @response `201` `string`
+     */
+    messageControllerCreate: (
+      data: CreateMessageDto,
+      params: RequestParams = {}
+    ) =>
+      this.request<string, any>({
+        path: `/message`,
+        method: "POST",
+        body: data,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @name MessageControllerFindAll
+     * @request GET:/message
+     * @response `200` `string`
+     */
+    messageControllerFindAll: (params: RequestParams = {}) =>
+      this.request<string, any>({
+        path: `/message`,
+        method: "GET",
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @name MessageControllerFindOne
+     * @request GET:/message/{id}
+     * @response `200` `string`
+     */
+    messageControllerFindOne: (id: string, params: RequestParams = {}) =>
+      this.request<string, any>({
+        path: `/message/${id}`,
+        method: "GET",
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @name MessageControllerUpdate
+     * @request PATCH:/message/{id}
+     * @response `200` `string`
+     */
+    messageControllerUpdate: (
+      id: string,
+      data: UpdateMessageDto,
+      params: RequestParams = {}
+    ) =>
+      this.request<string, any>({
+        path: `/message/${id}`,
+        method: "PATCH",
+        body: data,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @name MessageControllerRemove
+     * @request DELETE:/message/{id}
+     * @response `200` `string`
+     */
+    messageControllerRemove: (id: string, params: RequestParams = {}) =>
+      this.request<string, any>({
+        path: `/message/${id}`,
         method: "DELETE",
         format: "json",
         ...params,

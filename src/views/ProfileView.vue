@@ -1,5 +1,4 @@
-<script setup lang="ts">
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <Transition leave-active-class="animated slideOutLeft" appear>
@@ -28,20 +27,20 @@
                 src="@/assets/sample-profile-image.jpeg"
                 class="object-cover items-center rounded-full h-10 w-10"
               />
-              <p class="name ml-2 text-base text-gray-700 font-medium">Alex Smith</p>
+              <p class="name ml-2 text-base text-gray-700 font-medium">
+                Alex Smith
+              </p>
             </div>
           </span>
           <router-link
             :to="{ name: 'chat' }"
             class="bg-blue-500 rounded-md text-white py-2 px-4"
-          >Chat</router-link>
+            >Chat</router-link
+          >
         </div>
       </div>
     </div>
   </Transition>
 </template>
 
-<style>
-</style>
-
-
+<style></style>
