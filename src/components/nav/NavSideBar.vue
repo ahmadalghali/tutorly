@@ -1,5 +1,12 @@
 <script setup lang="ts">
+import { useAuth } from '@/stores/auth'
+import { reactive, ref } from "vue";
 
+const authStore = useAuth()
+
+function displayLogoutModal () {
+
+}
 </script>
 
 <template>
@@ -9,16 +16,24 @@
 		appear
 	>
 		<div class="sidebar">
-			<router-link to="/" class="sidebar-item">Home</router-link>
-			<router-link :to="{ name: 'book' }" class="sidebar-item">Book</router-link>
-			<router-link :to="{ name: 'about' }" class="sidebar-item">About</router-link>
+			<div class="flex flex-col">
+				<router-link to="/" class="sidebar-item">Home</router-link>
+				<router-link :to="{ name: 'book' }" class="sidebar-item">Book</router-link>
+				<router-link :to="{ name: 'about' }" class="sidebar-item">About</router-link>
+				<router-link :to="{ name: 'contact' }" class="sidebar-item">Contact</router-link>
+			</div>
+
 			<div class="divide-y divide-amber-900 px-6 mb-10">
 				<div class></div>
 				<div class></div>
 			</div>
-			<router-link v-if="false" :to="{ name: 'profile' }" class="sidebar-item">My Profile</router-link>
-			<router-link v-else :to="{ name: 'login' }" class="sidebar-item">Login</router-link>
-			<router-link :to="{ name: 'contact' }" class="sidebar-item">Contact</router-link>
+			<div v-if="authStore.isLoggedIn" class="flex flex-col">
+				<router-link :to="{ name: 'profile' }" class="sidebar-item">My Profile</router-link>
+				<p class="sidebar-item" @click="displayLogoutModal">Logout</p>
+			</div>
+			<div v-else>
+				<router-link :to="{ name: 'login' }" class="sidebar-item">Login</router-link>
+			</div>
 		</div>
 	</Transition>
 </template>
@@ -35,6 +50,6 @@
 	--animate-duration: 0.3s;
 }
 .sidebar-item {
-	@apply text-2xl mb-10 focus:outline-none pl-10 active:bg-amber-300 text-amber-900 font-medium;
+	@apply text-2xl mb-10 focus:outline-none pl-10 active:bg-amber-300 text-amber-900 font-medium active:bg-transparent;
 }
 </style>

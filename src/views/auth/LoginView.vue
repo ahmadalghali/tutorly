@@ -4,7 +4,7 @@ import { useAuth } from '@/stores/auth'
 
 import { reactive, ref } from "vue";
 
-const email = ref('a@a.com')
+const email = ref('a')
 const password = ref('a')
 
 const data = ref(null)

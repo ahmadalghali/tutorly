@@ -41,6 +41,7 @@ const {
   ...apiRoutes
 } = new Api({
   baseURL: import.meta.env.VITE_LTA_API_URL,
+  withCredentials: true,
 });
 
 // axiosInstance. AXIOS CONFIG HERE
