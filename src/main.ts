@@ -18,6 +18,8 @@ import {
   faPaperPlane,
   faArrowLeft,
   faLightbulb,
+  faMessage,
+  faCommentDots,
 } from "@fortawesome/free-solid-svg-icons";
 
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
@@ -29,12 +31,14 @@ library.add(
   faSearch,
   faPaperPlane,
   faArrowLeft,
-  faLightbulb
+  faLightbulb,
+  faMessage,
+  faCommentDots
 );
 
 const app = createApp(App);
 
-app.component("font-awesome-icon", FontAwesomeIcon);
+app.component("FontAwesomeIcon", FontAwesomeIcon);
 
 app.use(createPinia());
 app.use(router);

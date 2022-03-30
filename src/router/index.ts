@@ -7,10 +7,12 @@ import BookView from "../views/BookView.vue";
 import ContactView from "../views/ContactView.vue";
 import TermsAndConditionsView from "../views/TermsAndConditionsView.vue";
 import ChatView from "../views/ChatView.vue";
-import ProfileView from "../views/ProfileView.vue";
+import ProfileView from "../views/ProfileView/index.vue";
 import ModalBookingContactData from "@/components/modals/ModalBookingContactData.vue";
+import { useAuth } from "@/stores/auth";
 
 import { useNavBar } from "@/stores/navbar";
+import { useMe } from "@/stores/me";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -54,11 +56,17 @@ const router = createRouter({
       path: "/chat",
       name: "chat",
       component: ChatView,
+      meta: {
+        requiresAuth: true,
+      },
     },
     {
       path: "/profile",
       name: "profile",
       component: ProfileView,
+      meta: {
+        requiresAuth: true,
+      },
     },
     {
       path: "/book-contact-modal",
@@ -68,10 +76,32 @@ const router = createRouter({
   ],
 });
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from) => {
+  const authStore = useAuth();
+  const meStore = useMe();
   const navbarStore = useNavBar();
   navbarStore.close();
-  next();
+  // await meStore.getMe();
+
+  // if (to.meta.requiresAuth) {
+  //   if (!authStore.isLoggedIn) {
+  //     return {
+  //       path: "/login",
+  //       // save the location we were at to come back later
+  //       query: { redirect: to.fullPath },
+  //     };
+  //   }
+  //   return true;
+  // }
 });
+
+// declare module "vue-router" {
+//   interface RouteMeta {
+//     // is optional
+//     isAdmin?: boolean;
+//     // must be declared by every route
+//     requiresAuth: boolean;
+//   }
+// }
 
 export default router;

@@ -1,3 +1,5 @@
+import { useAuth } from "@/stores/auth";
+
 import { Api } from "@/global/api-types";
 import axios from "axios";
 
@@ -34,15 +36,36 @@ function handleResponseStatus(status: number) {
 
 // export default axiosInstance;
 
+console.log(
+  "import.meta.env.VITE_LTA_API_URL :>> ",
+  import.meta.env.VITE_LTA_API_URL
+);
+
+const BASE_URL = import.meta.env.VITE_LTA_API_URL;
+// const authStore = useAuth();
+// const axiosInstance = axios.create({
+//   baseURL: BASE_URL,
+//   withCredentials: true
+// })
+
 const {
-  instance: axiosInstance,
+  // instance: axiosInstance,
   request,
   setSecurityData,
   ...apiRoutes
-} = new Api({
-  baseURL: import.meta.env.VITE_LTA_API_URL,
+} = new Api();
+
+// axiosInstance. AXIOS CONFIG HERE
+
+const axiosInstance = axios.create({
+  baseURL: BASE_URL,
   withCredentials: true,
 });
 
-// axiosInstance. AXIOS CONFIG HERE
-export default apiRoutes;
+axiosInstance.interceptors.response.use(
+  (response) => response,
+  (error) => Promise.reject(error.response.data)
+);
+
+export default axiosInstance;
+// export default apiRoutes;

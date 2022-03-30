@@ -9,12 +9,13 @@
  * ---------------------------------------------------------------
  */
 
-export interface RegisterUserDto {
+export interface CreateStudentDto {
   email: string;
   password: string;
   firstname: string;
   lastname: string;
   phoneNumber: string;
+  isParent: boolean;
 }
 
 export interface LoginDto {
@@ -26,13 +27,13 @@ export interface LoginResponseDto {
   id: number;
 
   /** @format date-time */
-  createdAt: string;
+  deletedAt?: string;
 
   /** @format date-time */
-  deletedAt: string;
+  updatedAt?: string;
 
   /** @format date-time */
-  updatedAt: string;
+  createdAt?: string;
   email: string;
   firstname: string;
   lastname: string;
@@ -40,7 +41,7 @@ export interface LoginResponseDto {
   locked: boolean;
   profileImageUrl?: string;
   phoneNumber: string;
-  role: "admin" | "tutor" | "student" | "guest";
+  role: "admin" | "tutor" | "student";
 }
 
 export type VerifyEmailResponse = object;
@@ -58,17 +59,17 @@ export interface User {
   locked: boolean;
   profileImageUrl?: string;
   phoneNumber: string;
-  role: "admin" | "tutor" | "student" | "guest";
+  role: "admin" | "tutor" | "student";
   id: number;
 
   /** @format date-time */
-  createdAt: string;
+  deletedAt?: string;
 
   /** @format date-time */
-  deletedAt: string;
+  updatedAt?: string;
 
   /** @format date-time */
-  updatedAt: string;
+  createdAt?: string;
 }
 
 export interface UpdateUserDto {
@@ -78,15 +79,94 @@ export interface UpdateUserDto {
   phoneNumber?: string;
 }
 
-export type CreateTutorDto = object;
+export interface Subject {
+  name: string;
+  id: number;
 
-export type UpdateTutorDto = object;
+  /** @format date-time */
+  deletedAt?: string;
 
-export type CreateStudentDto = object;
+  /** @format date-time */
+  updatedAt?: string;
 
-export type UpdateStudentDto = object;
+  /** @format date-time */
+  createdAt?: string;
+}
 
-export type CreateAdminDto = object;
+export interface Tutor {
+  email: string;
+  password: string;
+  firstname: string;
+  lastname: string;
+  enabled: boolean;
+  locked: boolean;
+  profileImageUrl?: string;
+  phoneNumber: string;
+  role: "admin" | "tutor" | "student";
+  id: number;
+
+  /** @format date-time */
+  deletedAt?: string;
+
+  /** @format date-time */
+  updatedAt?: string;
+
+  /** @format date-time */
+  createdAt?: string;
+  subjects: Subject[];
+}
+
+export interface Student {
+  email: string;
+  password: string;
+  firstname: string;
+  lastname: string;
+  enabled: boolean;
+  locked: boolean;
+  profileImageUrl?: string;
+  phoneNumber: string;
+  role: "admin" | "tutor" | "student";
+  id: number;
+
+  /** @format date-time */
+  deletedAt?: string;
+
+  /** @format date-time */
+  updatedAt?: string;
+
+  /** @format date-time */
+  createdAt?: string;
+  isParent: boolean;
+  tutors: Tutor[];
+}
+
+export interface UpdateStudentDto {
+  tutorsIds: number[];
+  firstname?: string;
+  lastname?: string;
+  phoneNumber?: string;
+  isParent?: boolean;
+}
+
+export interface CreateTutorDto {
+  email: string;
+  password: string;
+  firstname: string;
+  lastname: string;
+  profileImageUrl?: string;
+  phoneNumber: string;
+  subjects: Subject[];
+}
+
+export interface UpdateTutorDto {
+  email?: string;
+  password?: string;
+  firstname?: string;
+  lastname?: string;
+  profileImageUrl?: string;
+  phoneNumber?: string;
+  subjects?: Subject[];
+}
 
 export type UpdateAdminDto = object;
 
@@ -94,23 +174,107 @@ export type CreateBookingDto = object;
 
 export type UpdateBookingDto = object;
 
-export type CreateChatDto = object;
+export interface CreateChatDto {
+  userId: number;
+}
 
-export type UpdateChatDto = object;
+export interface Chat {
+  tutor: User;
+  student: User;
+  id: number;
+
+  /** @format date-time */
+  deletedAt?: string;
+
+  /** @format date-time */
+  updatedAt?: string;
+
+  /** @format date-time */
+  createdAt?: string;
+}
+
+export interface UpdateChatDto {
+  userId?: number;
+}
+
+export interface CreateMessageDto {
+  receiverId: number;
+  text: string;
+}
+
+export interface Message {
+  text: string;
+  sender: User;
+  receiver: User;
+  id: number;
+
+  /** @format date-time */
+  deletedAt?: string;
+
+  /** @format date-time */
+  updatedAt?: string;
+
+  /** @format date-time */
+  createdAt?: string;
+}
+
+export interface UpdateMessageDto {
+  text?: string;
+  receiverId?: number;
+}
+
+export type CreateSubjectDto = object;
+
+export type UpdateSubjectDto = object;
+
+export type CreateLessonDto = object;
+
+export interface SubjectLevel {
+  name: string;
+  id: number;
+
+  /** @format date-time */
+  deletedAt?: string;
+
+  /** @format date-time */
+  updatedAt?: string;
+
+  /** @format date-time */
+  createdAt?: string;
+}
+
+export interface Lesson {
+  subject: Subject;
+  level: SubjectLevel;
+  tutor: Tutor;
+  students: Student[];
+  id: number;
+
+  /** @format date-time */
+  deletedAt?: string;
+
+  /** @format date-time */
+  updatedAt?: string;
+
+  /** @format date-time */
+  createdAt?: string;
+}
+
+export type UpdateLessonDto = object;
 
 export namespace Auth {
   /**
    * No description
    * @name AuthControllerRegister
    * @request POST:/auth/register
-   * @response `201` `VerifyEmailResponse`
+   * @response `201` `void`
    */
   export namespace AuthControllerRegister {
     export type RequestParams = {};
     export type RequestQuery = {};
-    export type RequestBody = RegisterUserDto;
+    export type RequestBody = CreateStudentDto;
     export type RequestHeaders = {};
-    export type ResponseBody = VerifyEmailResponse;
+    export type ResponseBody = void;
   }
   /**
    * No description
@@ -192,11 +356,11 @@ export namespace Auth {
   }
 }
 
-export namespace User {
+export namespace Users {
   /**
    * No description
    * @name UserControllerFindAll
-   * @request GET:/user
+   * @request GET:/users
    * @response `200` `string`
    */
   export namespace UserControllerFindAll {
@@ -209,7 +373,7 @@ export namespace User {
   /**
    * No description
    * @name UserControllerFindOne
-   * @request GET:/user/{id}
+   * @request GET:/users/{id}
    * @response `200` `User`
    */
   export namespace UserControllerFindOne {
@@ -222,7 +386,7 @@ export namespace User {
   /**
    * No description
    * @name UserControllerUpdate
-   * @request PATCH:/user/{id}
+   * @request PATCH:/users/{id}
    * @response `200` `void`
    */
   export namespace UserControllerUpdate {
@@ -235,7 +399,7 @@ export namespace User {
   /**
    * No description
    * @name UserControllerRemove
-   * @request DELETE:/user/{id}
+   * @request DELETE:/users/{id}
    * @response `200` `string`
    */
   export namespace UserControllerRemove {
@@ -247,108 +411,11 @@ export namespace User {
   }
 }
 
-export namespace Me {
-  /**
-   * No description
-   * @name MeControllerGetMe
-   * @request GET:/me
-   * @response `200` `string`
-   */
-  export namespace MeControllerGetMe {
-    export type RequestParams = {};
-    export type RequestQuery = {};
-    export type RequestBody = never;
-    export type RequestHeaders = {};
-    export type ResponseBody = string;
-  }
-}
-
-export namespace Tutor {
-  /**
-   * No description
-   * @name TutorControllerCreate
-   * @request POST:/tutor
-   * @response `201` `string`
-   */
-  export namespace TutorControllerCreate {
-    export type RequestParams = {};
-    export type RequestQuery = {};
-    export type RequestBody = CreateTutorDto;
-    export type RequestHeaders = {};
-    export type ResponseBody = string;
-  }
-  /**
-   * No description
-   * @name TutorControllerFindAll
-   * @request GET:/tutor
-   * @response `200` `string`
-   */
-  export namespace TutorControllerFindAll {
-    export type RequestParams = {};
-    export type RequestQuery = {};
-    export type RequestBody = never;
-    export type RequestHeaders = {};
-    export type ResponseBody = string;
-  }
-  /**
-   * No description
-   * @name TutorControllerFindOne
-   * @request GET:/tutor/{id}
-   * @response `200` `string`
-   */
-  export namespace TutorControllerFindOne {
-    export type RequestParams = { id: string };
-    export type RequestQuery = {};
-    export type RequestBody = never;
-    export type RequestHeaders = {};
-    export type ResponseBody = string;
-  }
-  /**
-   * No description
-   * @name TutorControllerUpdate
-   * @request PATCH:/tutor/{id}
-   * @response `200` `string`
-   */
-  export namespace TutorControllerUpdate {
-    export type RequestParams = { id: string };
-    export type RequestQuery = {};
-    export type RequestBody = UpdateTutorDto;
-    export type RequestHeaders = {};
-    export type ResponseBody = string;
-  }
-  /**
-   * No description
-   * @name TutorControllerRemove
-   * @request DELETE:/tutor/{id}
-   * @response `200` `string`
-   */
-  export namespace TutorControllerRemove {
-    export type RequestParams = { id: string };
-    export type RequestQuery = {};
-    export type RequestBody = never;
-    export type RequestHeaders = {};
-    export type ResponseBody = string;
-  }
-}
-
-export namespace Student {
-  /**
-   * No description
-   * @name StudentControllerCreate
-   * @request POST:/student
-   * @response `201` `string`
-   */
-  export namespace StudentControllerCreate {
-    export type RequestParams = {};
-    export type RequestQuery = {};
-    export type RequestBody = CreateStudentDto;
-    export type RequestHeaders = {};
-    export type ResponseBody = string;
-  }
+export namespace Students {
   /**
    * No description
    * @name StudentControllerFindAll
-   * @request GET:/student
+   * @request GET:/students
    * @response `200` `string`
    */
   export namespace StudentControllerFindAll {
@@ -361,20 +428,20 @@ export namespace Student {
   /**
    * No description
    * @name StudentControllerFindOne
-   * @request GET:/student/{id}
-   * @response `200` `string`
+   * @request GET:/students/{id}
+   * @response `200` `Student`
    */
   export namespace StudentControllerFindOne {
     export type RequestParams = { id: string };
     export type RequestQuery = {};
     export type RequestBody = never;
     export type RequestHeaders = {};
-    export type ResponseBody = string;
+    export type ResponseBody = Student;
   }
   /**
    * No description
    * @name StudentControllerUpdate
-   * @request PATCH:/student/{id}
+   * @request PATCH:/students/{id}
    * @response `200` `string`
    */
   export namespace StudentControllerUpdate {
@@ -387,7 +454,7 @@ export namespace Student {
   /**
    * No description
    * @name StudentControllerRemove
-   * @request DELETE:/student/{id}
+   * @request DELETE:/students/{id}
    * @response `200` `string`
    */
   export namespace StudentControllerRemove {
@@ -397,22 +464,106 @@ export namespace Student {
     export type RequestHeaders = {};
     export type ResponseBody = string;
   }
-}
-
-export namespace Admin {
   /**
    * No description
-   * @name AdminControllerCreate
-   * @request POST:/admin
-   * @response `201` `string`
+   * @name StudentControllerAssignTutorToStudent
+   * @request PATCH:/students/{studentId}/assign-tutor/{tutorId}
+   * @response `200` `Student`
    */
-  export namespace AdminControllerCreate {
+  export namespace StudentControllerAssignTutorToStudent {
+    export type RequestParams = { studentId: number; tutorId: number };
+    export type RequestQuery = {};
+    export type RequestBody = never;
+    export type RequestHeaders = {};
+    export type ResponseBody = Student;
+  }
+}
+
+export namespace Me {
+  /**
+   * No description
+   * @name MeControllerGetMe
+   * @request GET:/me
+   * @response `200` `VerifyEmailResponse`
+   */
+  export namespace MeControllerGetMe {
     export type RequestParams = {};
     export type RequestQuery = {};
-    export type RequestBody = CreateAdminDto;
+    export type RequestBody = never;
+    export type RequestHeaders = {};
+    export type ResponseBody = VerifyEmailResponse;
+  }
+}
+
+export namespace Tutors {
+  /**
+   * No description
+   * @name TutorControllerRegisterTutor
+   * @request POST:/tutors
+   * @response `201` `Tutor`
+   */
+  export namespace TutorControllerRegisterTutor {
+    export type RequestParams = {};
+    export type RequestQuery = {};
+    export type RequestBody = CreateTutorDto;
+    export type RequestHeaders = {};
+    export type ResponseBody = Tutor;
+  }
+  /**
+   * No description
+   * @name TutorControllerFindAll
+   * @request GET:/tutors
+   * @response `200` `string`
+   */
+  export namespace TutorControllerFindAll {
+    export type RequestParams = {};
+    export type RequestQuery = {};
+    export type RequestBody = never;
     export type RequestHeaders = {};
     export type ResponseBody = string;
   }
+  /**
+   * No description
+   * @name TutorControllerGetStudents
+   * @request GET:/tutors/my-students
+   * @response `200` `(Student)[]`
+   */
+  export namespace TutorControllerGetStudents {
+    export type RequestParams = {};
+    export type RequestQuery = {};
+    export type RequestBody = never;
+    export type RequestHeaders = {};
+    export type ResponseBody = Student[];
+  }
+  /**
+   * No description
+   * @name TutorControllerUpdate
+   * @request PATCH:/tutors/{id}
+   * @response `200` `string`
+   */
+  export namespace TutorControllerUpdate {
+    export type RequestParams = { id: string };
+    export type RequestQuery = {};
+    export type RequestBody = UpdateTutorDto;
+    export type RequestHeaders = {};
+    export type ResponseBody = string;
+  }
+  /**
+   * No description
+   * @name TutorControllerRemove
+   * @request DELETE:/tutors/{id}
+   * @response `200` `string`
+   */
+  export namespace TutorControllerRemove {
+    export type RequestParams = { id: string };
+    export type RequestQuery = {};
+    export type RequestBody = never;
+    export type RequestHeaders = {};
+    export type ResponseBody = string;
+  }
+}
+
+export namespace Admin {
   /**
    * No description
    * @name AdminControllerFindAll
@@ -449,19 +600,6 @@ export namespace Admin {
     export type RequestParams = { id: string };
     export type RequestQuery = {};
     export type RequestBody = UpdateAdminDto;
-    export type RequestHeaders = {};
-    export type ResponseBody = string;
-  }
-  /**
-   * No description
-   * @name AdminControllerRemove
-   * @request DELETE:/admin/{id}
-   * @response `200` `string`
-   */
-  export namespace AdminControllerRemove {
-    export type RequestParams = { id: string };
-    export type RequestQuery = {};
-    export type RequestBody = never;
     export type RequestHeaders = {};
     export type ResponseBody = string;
   }
@@ -535,24 +673,24 @@ export namespace Booking {
   }
 }
 
-export namespace Chat {
+export namespace Chats {
   /**
    * No description
    * @name ChatControllerCreate
-   * @request POST:/chat
-   * @response `201` `string`
+   * @request POST:/chats
+   * @response `201` `(Chat)[]`
    */
   export namespace ChatControllerCreate {
     export type RequestParams = {};
     export type RequestQuery = {};
     export type RequestBody = CreateChatDto;
     export type RequestHeaders = {};
-    export type ResponseBody = string;
+    export type ResponseBody = Chat[];
   }
   /**
    * No description
    * @name ChatControllerFindAll
-   * @request GET:/chat
+   * @request GET:/chats
    * @response `200` `string`
    */
   export namespace ChatControllerFindAll {
@@ -565,7 +703,7 @@ export namespace Chat {
   /**
    * No description
    * @name ChatControllerFindOne
-   * @request GET:/chat/{id}
+   * @request GET:/chats/{id}
    * @response `200` `string`
    */
   export namespace ChatControllerFindOne {
@@ -578,7 +716,7 @@ export namespace Chat {
   /**
    * No description
    * @name ChatControllerUpdate
-   * @request PATCH:/chat/{id}
+   * @request PATCH:/chats/{id}
    * @response `200` `string`
    */
   export namespace ChatControllerUpdate {
@@ -591,7 +729,7 @@ export namespace Chat {
   /**
    * No description
    * @name ChatControllerRemove
-   * @request DELETE:/chat/{id}
+   * @request DELETE:/chats/{id}
    * @response `200` `string`
    */
   export namespace ChatControllerRemove {
@@ -603,11 +741,247 @@ export namespace Chat {
   }
 }
 
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, ResponseType } from "axios";
+export namespace Messages {
+  /**
+   * No description
+   * @name MessageControllerSendMessage
+   * @request POST:/messages
+   * @response `201` `Message`
+   */
+  export namespace MessageControllerSendMessage {
+    export type RequestParams = {};
+    export type RequestQuery = {};
+    export type RequestBody = CreateMessageDto;
+    export type RequestHeaders = {};
+    export type ResponseBody = Message;
+  }
+  /**
+   * No description
+   * @name MessageControllerFindAll
+   * @request GET:/messages
+   * @response `200` `(Message)[]`
+   */
+  export namespace MessageControllerFindAll {
+    export type RequestParams = {};
+    export type RequestQuery = {};
+    export type RequestBody = never;
+    export type RequestHeaders = {};
+    export type ResponseBody = Message[];
+  }
+  /**
+   * No description
+   * @name MessageControllerFindAllMessagesWithUser
+   * @request GET:/messages/user/{userId}
+   * @response `200` `(Message)[]`
+   */
+  export namespace MessageControllerFindAllMessagesWithUser {
+    export type RequestParams = { userId: number };
+    export type RequestQuery = {};
+    export type RequestBody = never;
+    export type RequestHeaders = {};
+    export type ResponseBody = Message[];
+  }
+  /**
+   * No description
+   * @name MessageControllerFindOne
+   * @request GET:/messages/{id}
+   * @response `200` `Message`
+   */
+  export namespace MessageControllerFindOne {
+    export type RequestParams = { id: string };
+    export type RequestQuery = {};
+    export type RequestBody = never;
+    export type RequestHeaders = {};
+    export type ResponseBody = Message;
+  }
+  /**
+   * No description
+   * @name MessageControllerUpdate
+   * @request PATCH:/messages/{id}
+   * @response `200` `string`
+   */
+  export namespace MessageControllerUpdate {
+    export type RequestParams = { id: string };
+    export type RequestQuery = {};
+    export type RequestBody = UpdateMessageDto;
+    export type RequestHeaders = {};
+    export type ResponseBody = string;
+  }
+  /**
+   * No description
+   * @name MessageControllerRemove
+   * @request DELETE:/messages/{id}
+   * @response `200` `string`
+   */
+  export namespace MessageControllerRemove {
+    export type RequestParams = { id: string };
+    export type RequestQuery = {};
+    export type RequestBody = never;
+    export type RequestHeaders = {};
+    export type ResponseBody = string;
+  }
+}
+
+export namespace Subjects {
+  /**
+   * No description
+   * @name SubjectsControllerCreate
+   * @request POST:/subjects
+   * @response `201` `string`
+   */
+  export namespace SubjectsControllerCreate {
+    export type RequestParams = {};
+    export type RequestQuery = {};
+    export type RequestBody = CreateSubjectDto;
+    export type RequestHeaders = {};
+    export type ResponseBody = string;
+  }
+  /**
+   * No description
+   * @name SubjectsControllerFindAll
+   * @request GET:/subjects
+   * @response `200` `string`
+   */
+  export namespace SubjectsControllerFindAll {
+    export type RequestParams = {};
+    export type RequestQuery = {};
+    export type RequestBody = never;
+    export type RequestHeaders = {};
+    export type ResponseBody = string;
+  }
+  /**
+   * No description
+   * @name SubjectsControllerFindOne
+   * @request GET:/subjects/{id}
+   * @response `200` `string`
+   */
+  export namespace SubjectsControllerFindOne {
+    export type RequestParams = { id: string };
+    export type RequestQuery = {};
+    export type RequestBody = never;
+    export type RequestHeaders = {};
+    export type ResponseBody = string;
+  }
+  /**
+   * No description
+   * @name SubjectsControllerUpdate
+   * @request PATCH:/subjects/{id}
+   * @response `200` `string`
+   */
+  export namespace SubjectsControllerUpdate {
+    export type RequestParams = { id: string };
+    export type RequestQuery = {};
+    export type RequestBody = UpdateSubjectDto;
+    export type RequestHeaders = {};
+    export type ResponseBody = string;
+  }
+  /**
+   * No description
+   * @name SubjectsControllerRemove
+   * @request DELETE:/subjects/{id}
+   * @response `200` `string`
+   */
+  export namespace SubjectsControllerRemove {
+    export type RequestParams = { id: string };
+    export type RequestQuery = {};
+    export type RequestBody = never;
+    export type RequestHeaders = {};
+    export type ResponseBody = string;
+  }
+}
+
+export namespace Lessons {
+  /**
+   * No description
+   * @name LessonsControllerCreate
+   * @request POST:/lessons
+   * @response `201` `string`
+   */
+  export namespace LessonsControllerCreate {
+    export type RequestParams = {};
+    export type RequestQuery = {};
+    export type RequestBody = CreateLessonDto;
+    export type RequestHeaders = {};
+    export type ResponseBody = string;
+  }
+  /**
+   * No description
+   * @name LessonsControllerGetMyLessons
+   * @request GET:/lessons
+   * @response `200` `(Lesson)[]`
+   */
+  export namespace LessonsControllerGetMyLessons {
+    export type RequestParams = {};
+    export type RequestQuery = {};
+    export type RequestBody = never;
+    export type RequestHeaders = {};
+    export type ResponseBody = Lesson[];
+  }
+  /**
+   * No description
+   * @name LessonsControllerEnrolStudentInLesson
+   * @request PATCH:/lessons/{lessonId}/enrol/students/{studentId}
+   * @response `200` `Lesson`
+   */
+  export namespace LessonsControllerEnrolStudentInLesson {
+    export type RequestParams = { studentId: number; lessonId: number };
+    export type RequestQuery = {};
+    export type RequestBody = never;
+    export type RequestHeaders = {};
+    export type ResponseBody = Lesson;
+  }
+  /**
+   * No description
+   * @name LessonsControllerFindOne
+   * @request GET:/lessons/{id}
+   * @response `200` `string`
+   */
+  export namespace LessonsControllerFindOne {
+    export type RequestParams = { id: string };
+    export type RequestQuery = {};
+    export type RequestBody = never;
+    export type RequestHeaders = {};
+    export type ResponseBody = string;
+  }
+  /**
+   * No description
+   * @name LessonsControllerUpdate
+   * @request PATCH:/lessons/{id}
+   * @response `200` `string`
+   */
+  export namespace LessonsControllerUpdate {
+    export type RequestParams = { id: string };
+    export type RequestQuery = {};
+    export type RequestBody = UpdateLessonDto;
+    export type RequestHeaders = {};
+    export type ResponseBody = string;
+  }
+  /**
+   * No description
+   * @name LessonsControllerRemove
+   * @request DELETE:/lessons/{id}
+   * @response `200` `string`
+   */
+  export namespace LessonsControllerRemove {
+    export type RequestParams = { id: string };
+    export type RequestQuery = {};
+    export type RequestBody = never;
+    export type RequestHeaders = {};
+    export type ResponseBody = string;
+  }
+}
+
+import axios, {
+  AxiosInstance,
+  AxiosRequestConfig,
+  AxiosResponse,
+  ResponseType,
+} from "axios";
 
 export type QueryParamsType = Record<string | number, any>;
 
-export interface FullRequestParams extends Omit<AxiosRequestConfig, "data" | "params" | "url" | "responseType"> {
+export interface FullRequestParams
+  extends Omit<AxiosRequestConfig, "data" | "params" | "url" | "responseType"> {
   /** set parameter to `true` for call `securityWorker` for this request */
   secure?: boolean;
   /** request path */
@@ -622,11 +996,15 @@ export interface FullRequestParams extends Omit<AxiosRequestConfig, "data" | "pa
   body?: unknown;
 }
 
-export type RequestParams = Omit<FullRequestParams, "body" | "method" | "query" | "path">;
+export type RequestParams = Omit<
+  FullRequestParams,
+  "body" | "method" | "query" | "path"
+>;
 
-export interface ApiConfig<SecurityDataType = unknown> extends Omit<AxiosRequestConfig, "data" | "cancelToken"> {
+export interface ApiConfig<SecurityDataType = unknown>
+  extends Omit<AxiosRequestConfig, "data" | "cancelToken"> {
   securityWorker?: (
-    securityData: SecurityDataType | null,
+    securityData: SecurityDataType | null
   ) => Promise<AxiosRequestConfig | void> | AxiosRequestConfig | void;
   secure?: boolean;
   format?: ResponseType;
@@ -645,8 +1023,16 @@ export class HttpClient<SecurityDataType = unknown> {
   private secure?: boolean;
   private format?: ResponseType;
 
-  constructor({ securityWorker, secure, format, ...axiosConfig }: ApiConfig<SecurityDataType> = {}) {
-    this.instance = axios.create({ ...axiosConfig, baseURL: axiosConfig.baseURL || "" });
+  constructor({
+    securityWorker,
+    secure,
+    format,
+    ...axiosConfig
+  }: ApiConfig<SecurityDataType> = {}) {
+    this.instance = axios.create({
+      ...axiosConfig,
+      baseURL: axiosConfig.baseURL || "",
+    });
     this.secure = secure;
     this.format = format;
     this.securityWorker = securityWorker;
@@ -656,7 +1042,10 @@ export class HttpClient<SecurityDataType = unknown> {
     this.securityData = data;
   };
 
-  private mergeRequestParams(params1: AxiosRequestConfig, params2?: AxiosRequestConfig): AxiosRequestConfig {
+  private mergeRequestParams(
+    params1: AxiosRequestConfig,
+    params2?: AxiosRequestConfig
+  ): AxiosRequestConfig {
     return {
       ...this.instance.defaults,
       ...params1,
@@ -678,7 +1067,7 @@ export class HttpClient<SecurityDataType = unknown> {
           ? property
           : typeof property === "object" && property !== null
           ? JSON.stringify(property)
-          : `${property}`,
+          : `${property}`
       );
       return formData;
     }, new FormData());
@@ -701,7 +1090,12 @@ export class HttpClient<SecurityDataType = unknown> {
     const requestParams = this.mergeRequestParams(params, secureParams);
     const responseFormat = (format && this.format) || void 0;
 
-    if (type === ContentType.FormData && body && body !== null && typeof body === "object") {
+    if (
+      type === ContentType.FormData &&
+      body &&
+      body !== null &&
+      typeof body === "object"
+    ) {
       requestParams.headers.common = { Accept: "*/*" };
       requestParams.headers.post = {};
       requestParams.headers.put = {};
@@ -712,7 +1106,9 @@ export class HttpClient<SecurityDataType = unknown> {
     return this.instance.request({
       ...requestParams,
       headers: {
-        ...(type && type !== ContentType.FormData ? { "Content-Type": type } : {}),
+        ...(type && type !== ContentType.FormData
+          ? { "Content-Type": type }
+          : {}),
         ...(requestParams.headers || {}),
       },
       params: query,
@@ -728,22 +1124,26 @@ export class HttpClient<SecurityDataType = unknown> {
  * @version 1.0.0
  * @contact
  */
-export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDataType> {
+export class Api<
+  SecurityDataType extends unknown
+> extends HttpClient<SecurityDataType> {
   auth = {
     /**
      * No description
      *
      * @name AuthControllerRegister
      * @request POST:/auth/register
-     * @response `201` `VerifyEmailResponse`
+     * @response `201` `void`
      */
-    authControllerRegister: (data: RegisterUserDto, params: RequestParams = {}) =>
-      this.request<VerifyEmailResponse, any>({
+    authControllerRegister: (
+      data: CreateStudentDto,
+      params: RequestParams = {}
+    ) =>
+      this.request<void, any>({
         path: `/auth/register`,
         method: "POST",
         body: data,
         type: ContentType.Json,
-        format: "json",
         ...params,
       }),
 
@@ -839,17 +1239,17 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         ...params,
       }),
   };
-  user = {
+  users = {
     /**
      * No description
      *
      * @name UserControllerFindAll
-     * @request GET:/user
+     * @request GET:/users
      * @response `200` `string`
      */
     userControllerFindAll: (params: RequestParams = {}) =>
       this.request<string, any>({
-        path: `/user`,
+        path: `/users`,
         method: "GET",
         format: "json",
         ...params,
@@ -859,12 +1259,12 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @name UserControllerFindOne
-     * @request GET:/user/{id}
+     * @request GET:/users/{id}
      * @response `200` `User`
      */
     userControllerFindOne: (id: string, params: RequestParams = {}) =>
       this.request<User, any>({
-        path: `/user/${id}`,
+        path: `/users/${id}`,
         method: "GET",
         format: "json",
         ...params,
@@ -874,12 +1274,16 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @name UserControllerUpdate
-     * @request PATCH:/user/{id}
+     * @request PATCH:/users/{id}
      * @response `200` `void`
      */
-    userControllerUpdate: (id: string, data: UpdateUserDto, params: RequestParams = {}) =>
+    userControllerUpdate: (
+      id: string,
+      data: UpdateUserDto,
+      params: RequestParams = {}
+    ) =>
       this.request<void, any>({
-        path: `/user/${id}`,
+        path: `/users/${id}`,
         method: "PATCH",
         body: data,
         type: ContentType.Json,
@@ -890,141 +1294,28 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @name UserControllerRemove
-     * @request DELETE:/user/{id}
+     * @request DELETE:/users/{id}
      * @response `200` `string`
      */
     userControllerRemove: (id: string, params: RequestParams = {}) =>
       this.request<string, any>({
-        path: `/user/${id}`,
+        path: `/users/${id}`,
         method: "DELETE",
         format: "json",
         ...params,
       }),
   };
-  me = {
-    /**
-     * No description
-     *
-     * @name MeControllerGetMe
-     * @request GET:/me
-     * @response `200` `string`
-     */
-    meControllerGetMe: (params: RequestParams = {}) =>
-      this.request<string, any>({
-        path: `/me`,
-        method: "GET",
-        format: "json",
-        ...params,
-      }),
-  };
-  tutor = {
-    /**
-     * No description
-     *
-     * @name TutorControllerCreate
-     * @request POST:/tutor
-     * @response `201` `string`
-     */
-    tutorControllerCreate: (data: CreateTutorDto, params: RequestParams = {}) =>
-      this.request<string, any>({
-        path: `/tutor`,
-        method: "POST",
-        body: data,
-        type: ContentType.Json,
-        format: "json",
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @name TutorControllerFindAll
-     * @request GET:/tutor
-     * @response `200` `string`
-     */
-    tutorControllerFindAll: (params: RequestParams = {}) =>
-      this.request<string, any>({
-        path: `/tutor`,
-        method: "GET",
-        format: "json",
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @name TutorControllerFindOne
-     * @request GET:/tutor/{id}
-     * @response `200` `string`
-     */
-    tutorControllerFindOne: (id: string, params: RequestParams = {}) =>
-      this.request<string, any>({
-        path: `/tutor/${id}`,
-        method: "GET",
-        format: "json",
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @name TutorControllerUpdate
-     * @request PATCH:/tutor/{id}
-     * @response `200` `string`
-     */
-    tutorControllerUpdate: (id: string, data: UpdateTutorDto, params: RequestParams = {}) =>
-      this.request<string, any>({
-        path: `/tutor/${id}`,
-        method: "PATCH",
-        body: data,
-        type: ContentType.Json,
-        format: "json",
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @name TutorControllerRemove
-     * @request DELETE:/tutor/{id}
-     * @response `200` `string`
-     */
-    tutorControllerRemove: (id: string, params: RequestParams = {}) =>
-      this.request<string, any>({
-        path: `/tutor/${id}`,
-        method: "DELETE",
-        format: "json",
-        ...params,
-      }),
-  };
-  student = {
-    /**
-     * No description
-     *
-     * @name StudentControllerCreate
-     * @request POST:/student
-     * @response `201` `string`
-     */
-    studentControllerCreate: (data: CreateStudentDto, params: RequestParams = {}) =>
-      this.request<string, any>({
-        path: `/student`,
-        method: "POST",
-        body: data,
-        type: ContentType.Json,
-        format: "json",
-        ...params,
-      }),
-
+  students = {
     /**
      * No description
      *
      * @name StudentControllerFindAll
-     * @request GET:/student
+     * @request GET:/students
      * @response `200` `string`
      */
     studentControllerFindAll: (params: RequestParams = {}) =>
       this.request<string, any>({
-        path: `/student`,
+        path: `/students`,
         method: "GET",
         format: "json",
         ...params,
@@ -1034,12 +1325,12 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @name StudentControllerFindOne
-     * @request GET:/student/{id}
-     * @response `200` `string`
+     * @request GET:/students/{id}
+     * @response `200` `Student`
      */
     studentControllerFindOne: (id: string, params: RequestParams = {}) =>
-      this.request<string, any>({
-        path: `/student/${id}`,
+      this.request<Student, any>({
+        path: `/students/${id}`,
         method: "GET",
         format: "json",
         ...params,
@@ -1049,12 +1340,16 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @name StudentControllerUpdate
-     * @request PATCH:/student/{id}
+     * @request PATCH:/students/{id}
      * @response `200` `string`
      */
-    studentControllerUpdate: (id: string, data: UpdateStudentDto, params: RequestParams = {}) =>
+    studentControllerUpdate: (
+      id: string,
+      data: UpdateStudentDto,
+      params: RequestParams = {}
+    ) =>
       this.request<string, any>({
-        path: `/student/${id}`,
+        path: `/students/${id}`,
         method: "PATCH",
         body: data,
         type: ContentType.Json,
@@ -1066,28 +1361,66 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @name StudentControllerRemove
-     * @request DELETE:/student/{id}
+     * @request DELETE:/students/{id}
      * @response `200` `string`
      */
     studentControllerRemove: (id: string, params: RequestParams = {}) =>
       this.request<string, any>({
-        path: `/student/${id}`,
+        path: `/students/${id}`,
         method: "DELETE",
         format: "json",
         ...params,
       }),
-  };
-  admin = {
+
     /**
      * No description
      *
-     * @name AdminControllerCreate
-     * @request POST:/admin
-     * @response `201` `string`
+     * @name StudentControllerAssignTutorToStudent
+     * @request PATCH:/students/{studentId}/assign-tutor/{tutorId}
+     * @response `200` `Student`
      */
-    adminControllerCreate: (data: CreateAdminDto, params: RequestParams = {}) =>
-      this.request<string, any>({
-        path: `/admin`,
+    studentControllerAssignTutorToStudent: (
+      studentId: number,
+      tutorId: number,
+      params: RequestParams = {}
+    ) =>
+      this.request<Student, any>({
+        path: `/students/${studentId}/assign-tutor/${tutorId}`,
+        method: "PATCH",
+        format: "json",
+        ...params,
+      }),
+  };
+  me = {
+    /**
+     * No description
+     *
+     * @name MeControllerGetMe
+     * @request GET:/me
+     * @response `200` `VerifyEmailResponse`
+     */
+    meControllerGetMe: (params: RequestParams = {}) =>
+      this.request<VerifyEmailResponse, any>({
+        path: `/me`,
+        method: "GET",
+        format: "json",
+        ...params,
+      }),
+  };
+  tutors = {
+    /**
+     * No description
+     *
+     * @name TutorControllerRegisterTutor
+     * @request POST:/tutors
+     * @response `201` `Tutor`
+     */
+    tutorControllerRegisterTutor: (
+      data: CreateTutorDto,
+      params: RequestParams = {}
+    ) =>
+      this.request<Tutor, any>({
+        path: `/tutors`,
         method: "POST",
         body: data,
         type: ContentType.Json,
@@ -1095,6 +1428,73 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         ...params,
       }),
 
+    /**
+     * No description
+     *
+     * @name TutorControllerFindAll
+     * @request GET:/tutors
+     * @response `200` `string`
+     */
+    tutorControllerFindAll: (params: RequestParams = {}) =>
+      this.request<string, any>({
+        path: `/tutors`,
+        method: "GET",
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @name TutorControllerGetStudents
+     * @request GET:/tutors/my-students
+     * @response `200` `(Student)[]`
+     */
+    tutorControllerGetStudents: (params: RequestParams = {}) =>
+      this.request<Student[], any>({
+        path: `/tutors/my-students`,
+        method: "GET",
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @name TutorControllerUpdate
+     * @request PATCH:/tutors/{id}
+     * @response `200` `string`
+     */
+    tutorControllerUpdate: (
+      id: string,
+      data: UpdateTutorDto,
+      params: RequestParams = {}
+    ) =>
+      this.request<string, any>({
+        path: `/tutors/${id}`,
+        method: "PATCH",
+        body: data,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @name TutorControllerRemove
+     * @request DELETE:/tutors/{id}
+     * @response `200` `string`
+     */
+    tutorControllerRemove: (id: string, params: RequestParams = {}) =>
+      this.request<string, any>({
+        path: `/tutors/${id}`,
+        method: "DELETE",
+        format: "json",
+        ...params,
+      }),
+  };
+  admin = {
     /**
      * No description
      *
@@ -1132,27 +1532,16 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request PATCH:/admin/{id}
      * @response `200` `string`
      */
-    adminControllerUpdate: (id: string, data: UpdateAdminDto, params: RequestParams = {}) =>
+    adminControllerUpdate: (
+      id: string,
+      data: UpdateAdminDto,
+      params: RequestParams = {}
+    ) =>
       this.request<string, any>({
         path: `/admin/${id}`,
         method: "PATCH",
         body: data,
         type: ContentType.Json,
-        format: "json",
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @name AdminControllerRemove
-     * @request DELETE:/admin/{id}
-     * @response `200` `string`
-     */
-    adminControllerRemove: (id: string, params: RequestParams = {}) =>
-      this.request<string, any>({
-        path: `/admin/${id}`,
-        method: "DELETE",
         format: "json",
         ...params,
       }),
@@ -1165,7 +1554,10 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request POST:/booking
      * @response `201` `string`
      */
-    bookingControllerCreate: (data: CreateBookingDto, params: RequestParams = {}) =>
+    bookingControllerCreate: (
+      data: CreateBookingDto,
+      params: RequestParams = {}
+    ) =>
       this.request<string, any>({
         path: `/booking`,
         method: "POST",
@@ -1212,7 +1604,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request PATCH:/booking/{id}
      * @response `200` `string`
      */
-    bookingControllerUpdate: (id: string, data: UpdateBookingDto, params: RequestParams = {}) =>
+    bookingControllerUpdate: (
+      id: string,
+      data: UpdateBookingDto,
+      params: RequestParams = {}
+    ) =>
       this.request<string, any>({
         path: `/booking/${id}`,
         method: "PATCH",
@@ -1237,17 +1633,17 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         ...params,
       }),
   };
-  chat = {
+  chats = {
     /**
      * No description
      *
      * @name ChatControllerCreate
-     * @request POST:/chat
-     * @response `201` `string`
+     * @request POST:/chats
+     * @response `201` `(Chat)[]`
      */
     chatControllerCreate: (data: CreateChatDto, params: RequestParams = {}) =>
-      this.request<string, any>({
-        path: `/chat`,
+      this.request<Chat[], any>({
+        path: `/chats`,
         method: "POST",
         body: data,
         type: ContentType.Json,
@@ -1259,12 +1655,12 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @name ChatControllerFindAll
-     * @request GET:/chat
+     * @request GET:/chats
      * @response `200` `string`
      */
     chatControllerFindAll: (params: RequestParams = {}) =>
       this.request<string, any>({
-        path: `/chat`,
+        path: `/chats`,
         method: "GET",
         format: "json",
         ...params,
@@ -1274,12 +1670,12 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @name ChatControllerFindOne
-     * @request GET:/chat/{id}
+     * @request GET:/chats/{id}
      * @response `200` `string`
      */
     chatControllerFindOne: (id: string, params: RequestParams = {}) =>
       this.request<string, any>({
-        path: `/chat/${id}`,
+        path: `/chats/${id}`,
         method: "GET",
         format: "json",
         ...params,
@@ -1289,12 +1685,16 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @name ChatControllerUpdate
-     * @request PATCH:/chat/{id}
+     * @request PATCH:/chats/{id}
      * @response `200` `string`
      */
-    chatControllerUpdate: (id: string, data: UpdateChatDto, params: RequestParams = {}) =>
+    chatControllerUpdate: (
+      id: string,
+      data: UpdateChatDto,
+      params: RequestParams = {}
+    ) =>
       this.request<string, any>({
-        path: `/chat/${id}`,
+        path: `/chats/${id}`,
         method: "PATCH",
         body: data,
         type: ContentType.Json,
@@ -1306,12 +1706,310 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @name ChatControllerRemove
-     * @request DELETE:/chat/{id}
+     * @request DELETE:/chats/{id}
      * @response `200` `string`
      */
     chatControllerRemove: (id: string, params: RequestParams = {}) =>
       this.request<string, any>({
-        path: `/chat/${id}`,
+        path: `/chats/${id}`,
+        method: "DELETE",
+        format: "json",
+        ...params,
+      }),
+  };
+  messages = {
+    /**
+     * No description
+     *
+     * @name MessageControllerSendMessage
+     * @request POST:/messages
+     * @response `201` `Message`
+     */
+    messageControllerSendMessage: (
+      data: CreateMessageDto,
+      params: RequestParams = {}
+    ) =>
+      this.request<Message, any>({
+        path: `/messages`,
+        method: "POST",
+        body: data,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @name MessageControllerFindAll
+     * @request GET:/messages
+     * @response `200` `(Message)[]`
+     */
+    messageControllerFindAll: (params: RequestParams = {}) =>
+      this.request<Message[], any>({
+        path: `/messages`,
+        method: "GET",
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @name MessageControllerFindAllMessagesWithUser
+     * @request GET:/messages/user/{userId}
+     * @response `200` `(Message)[]`
+     */
+    messageControllerFindAllMessagesWithUser: (
+      userId: number,
+      params: RequestParams = {}
+    ) =>
+      this.request<Message[], any>({
+        path: `/messages/user/${userId}`,
+        method: "GET",
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @name MessageControllerFindOne
+     * @request GET:/messages/{id}
+     * @response `200` `Message`
+     */
+    messageControllerFindOne: (id: string, params: RequestParams = {}) =>
+      this.request<Message, any>({
+        path: `/messages/${id}`,
+        method: "GET",
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @name MessageControllerUpdate
+     * @request PATCH:/messages/{id}
+     * @response `200` `string`
+     */
+    messageControllerUpdate: (
+      id: string,
+      data: UpdateMessageDto,
+      params: RequestParams = {}
+    ) =>
+      this.request<string, any>({
+        path: `/messages/${id}`,
+        method: "PATCH",
+        body: data,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @name MessageControllerRemove
+     * @request DELETE:/messages/{id}
+     * @response `200` `string`
+     */
+    messageControllerRemove: (id: string, params: RequestParams = {}) =>
+      this.request<string, any>({
+        path: `/messages/${id}`,
+        method: "DELETE",
+        format: "json",
+        ...params,
+      }),
+  };
+  subjects = {
+    /**
+     * No description
+     *
+     * @name SubjectsControllerCreate
+     * @request POST:/subjects
+     * @response `201` `string`
+     */
+    subjectsControllerCreate: (
+      data: CreateSubjectDto,
+      params: RequestParams = {}
+    ) =>
+      this.request<string, any>({
+        path: `/subjects`,
+        method: "POST",
+        body: data,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @name SubjectsControllerFindAll
+     * @request GET:/subjects
+     * @response `200` `string`
+     */
+    subjectsControllerFindAll: (params: RequestParams = {}) =>
+      this.request<string, any>({
+        path: `/subjects`,
+        method: "GET",
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @name SubjectsControllerFindOne
+     * @request GET:/subjects/{id}
+     * @response `200` `string`
+     */
+    subjectsControllerFindOne: (id: string, params: RequestParams = {}) =>
+      this.request<string, any>({
+        path: `/subjects/${id}`,
+        method: "GET",
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @name SubjectsControllerUpdate
+     * @request PATCH:/subjects/{id}
+     * @response `200` `string`
+     */
+    subjectsControllerUpdate: (
+      id: string,
+      data: UpdateSubjectDto,
+      params: RequestParams = {}
+    ) =>
+      this.request<string, any>({
+        path: `/subjects/${id}`,
+        method: "PATCH",
+        body: data,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @name SubjectsControllerRemove
+     * @request DELETE:/subjects/{id}
+     * @response `200` `string`
+     */
+    subjectsControllerRemove: (id: string, params: RequestParams = {}) =>
+      this.request<string, any>({
+        path: `/subjects/${id}`,
+        method: "DELETE",
+        format: "json",
+        ...params,
+      }),
+  };
+  lessons = {
+    /**
+     * No description
+     *
+     * @name LessonsControllerCreate
+     * @request POST:/lessons
+     * @response `201` `string`
+     */
+    lessonsControllerCreate: (
+      data: CreateLessonDto,
+      params: RequestParams = {}
+    ) =>
+      this.request<string, any>({
+        path: `/lessons`,
+        method: "POST",
+        body: data,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @name LessonsControllerGetMyLessons
+     * @request GET:/lessons
+     * @response `200` `(Lesson)[]`
+     */
+    lessonsControllerGetMyLessons: (params: RequestParams = {}) =>
+      this.request<Lesson[], any>({
+        path: `/lessons`,
+        method: "GET",
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @name LessonsControllerEnrolStudentInLesson
+     * @request PATCH:/lessons/{lessonId}/enrol/students/{studentId}
+     * @response `200` `Lesson`
+     */
+    lessonsControllerEnrolStudentInLesson: (
+      studentId: number,
+      lessonId: number,
+      params: RequestParams = {}
+    ) =>
+      this.request<Lesson, any>({
+        path: `/lessons/${lessonId}/enrol/students/${studentId}`,
+        method: "PATCH",
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @name LessonsControllerFindOne
+     * @request GET:/lessons/{id}
+     * @response `200` `string`
+     */
+    lessonsControllerFindOne: (id: string, params: RequestParams = {}) =>
+      this.request<string, any>({
+        path: `/lessons/${id}`,
+        method: "GET",
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @name LessonsControllerUpdate
+     * @request PATCH:/lessons/{id}
+     * @response `200` `string`
+     */
+    lessonsControllerUpdate: (
+      id: string,
+      data: UpdateLessonDto,
+      params: RequestParams = {}
+    ) =>
+      this.request<string, any>({
+        path: `/lessons/${id}`,
+        method: "PATCH",
+        body: data,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @name LessonsControllerRemove
+     * @request DELETE:/lessons/{id}
+     * @response `200` `string`
+     */
+    lessonsControllerRemove: (id: string, params: RequestParams = {}) =>
+      this.request<string, any>({
+        path: `/lessons/${id}`,
         method: "DELETE",
         format: "json",
         ...params,

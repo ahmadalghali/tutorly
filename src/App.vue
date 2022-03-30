@@ -1,27 +1,29 @@
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { onBeforeMount, onMounted, ref } from "vue";
 import { RouterLink, RouterView } from "vue-router";
 import NavBar from "./components/nav/NavBar.vue";
-import { ModalsContainer } from "vue-final-modal";
+import { useAuth } from "@/stores/auth";
+import { useMe } from "@/stores/me";
+
+// import { ModalsContainer } from "vue-final-modal";
 import { inject } from "vue";
 const $vfm: any = inject("$vfm");
 
 const show = ref(false);
+const meStore = useMe();
 
-function showLogoutModal() {
-  $vfm.show({ component: "LogoutModal" });
-}
-
-// import {} from '@/stores/auth'
-// created () {
-
+// function showLogoutModal() {
+//   $vfm.show({ component: "LogoutModal" });
 // }
+
+onBeforeMount(async () => {
+  await meStore.getMe();
+});
 </script>
 <template>
   <div>
-    <div :class="$route.name == 'chat' ? '' : 'pb-20'">
-      <NavBar v-show="$route.name !== 'chat'" />
-      <button @click="showLogoutModal">open logout modal</button>
+    <div :class="$route.name === 'chat' ? '' : 'pb-20'">
+      <NavBar v-if="$route.path !== '/chat'" />
       <RouterView class="router" :class="$route.name == 'chat' ? '' : 'px-4'" />
     </div>
     <modals-container></modals-container>
@@ -30,7 +32,7 @@ function showLogoutModal() {
 
 <style>
 body {
-  @apply bg-gray-100;
+  /* @apply bg-gray-100; */
 }
 
 input {

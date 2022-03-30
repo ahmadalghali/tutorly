@@ -12,10 +12,11 @@
     }
   ],
   "compilerOptions": {
-    "types": ["node"],
-    "lib": [
-      "es6",
-      "dom"
-  ],
+    "module": "es2022"
+  //   "types": ["node"],
+  //   "lib": [
+  //     "es6",
+  //     "dom"
+  // ],
   },
 }

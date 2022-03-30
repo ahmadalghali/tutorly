@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-undef
 const colors = require("tailwindcss/colors");
 
 module.exports = {
@@ -6,6 +7,12 @@ module.exports = {
   theme: {
     container: {
       center: true,
+      padding: "1rem",
+      screens: {
+        lg: "1124px",
+        xl: "1124px",
+        "2xl": "1124px",
+      },
     },
     colors: {
       transparent: "transparent",
@@ -27,8 +34,6 @@ module.exports = {
       orange: colors.orange,
       black: colors.black,
       white: colors.white,
-      indigo: colors.indigo,
-      rose: colors.rose,
       red: colors.red,
       yellow: colors.yellow,
       stone: colors.stone,
