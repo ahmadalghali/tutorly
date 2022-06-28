@@ -3,10 +3,10 @@ import api from "@/services/api";
 import type { CreateStudentDto, Lesson, Student } from "@/global/api-types";
 import { useToast } from "vue-toastification";
 import router from "@/router";
-import { useMe } from "./me";
+import { useMeStore } from "./me";
 const toast = useToast();
 
-export const useStudent = defineStore({
+export const useStudentStore = defineStore({
   id: "student",
   state: () => ({
     myLessons: [] as Lesson[],
@@ -18,7 +18,7 @@ export const useStudent = defineStore({
       api
         .get("lessons")
         .then((res) => {
-          console.log("res :>> ", res);
+          // console.log("res :>> ", res);
           this.myLessons = res.data;
         })
         .catch((err) => {

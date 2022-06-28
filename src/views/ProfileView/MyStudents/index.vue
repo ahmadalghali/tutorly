@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import Student from "./Student.vue";
-import { useTutor } from "@/stores/tutor";
+import { useTutorStore } from "@/stores/tutor";
 import { onBeforeMount, computed } from "vue";
 onBeforeMount(async () => {
-  await useTutor().getMyStudents();
+  await useTutorStore().getMyStudents();
 });
 
 const students = computed(() => {
-  return useTutor().myStudents;
+  return useTutorStore().myStudents;
 });
 </script>
 <template>

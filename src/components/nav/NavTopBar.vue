@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { useNavBar } from "@/stores/navbar";
+import { useNavBarStore } from "@/stores/navbar";
 
-const navbarStore = useNavBar();
+const navbarStore = useNavBarStore();
 // const props = defineProps({
 //     sideBarOpen: { type: Boolean, required: true },
 // });

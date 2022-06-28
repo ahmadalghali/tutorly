@@ -12,11 +12,11 @@
     }
   ],
   "compilerOptions": {
-    "module": "es2022"
-  //   "types": ["node"],
-  //   "lib": [
-  //     "es6",
-  //     "dom"
-  // ],
+    // "baseUrl": ".",
+    // "paths": {
+    //   "@/*": ["./src/*"]
+    // },
+    // "types": ["vue/ref-macros"]
   },
+  "include": ["auto-imports.d.ts"]
 }

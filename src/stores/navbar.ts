@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 
-export const useNavBar = defineStore({
+export const useNavBarStore = defineStore({
   id: "navbar",
   state: () => ({
     isOpen: false,

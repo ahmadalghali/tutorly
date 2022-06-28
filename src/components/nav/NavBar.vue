@@ -3,10 +3,10 @@
 import NavSideBar from "@/components/nav/NavSideBar.vue";
 import NavTopBar from "@/components/nav/NavTopBar.vue";
 // import { ref, onBeforeMount } from "vue";
-import { useNavBar } from "@/stores/navbar";
+import { useNavBarStore } from "@/stores/navbar";
 import { onBeforeMount } from "vue";
 
-const navbarStore = useNavBar();
+const navbarStore = useNavBarStore();
 </script>
 
 <template>

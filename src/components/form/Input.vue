@@ -1,21 +1,19 @@
 <script setup lang="ts">
-
 const props = defineProps<{
-  type: string,
-  title: string,
-  value: string
-}>()
+  type: string;
+  title: string;
+  value: string;
+}>();
 
 const emit = defineEmits<{
-  (e: 'input', content: string): void
-}>()
+  (e: "input", content: string): void;
+}>();
 
-const content = props.value
+const content = props.value;
 
-function handleInput () {
-  emit('input', content)
+function handleInput() {
+  emit("input", content);
 }
-
 </script>
 
 <template>
@@ -23,12 +21,9 @@ function handleInput () {
     <label class="text-xl font-medium">{{ title }}</label>
     <br />
     <input
-      @input="handleInput"
       :type="type"
       class="mt-2 px-4 py-3 w-full rounded-xl text-xl shadow-md bg-white"
+      @input="handleInput"
     />
   </div>
 </template>
-
-
-

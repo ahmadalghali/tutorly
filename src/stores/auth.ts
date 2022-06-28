@@ -11,17 +11,17 @@ import { useAxios } from "@vueuse/integrations/useAxios";
 import { useApi } from "@/use/api";
 import { useToast } from "vue-toastification";
 import router from "@/router";
-import { useMe } from "./me";
-import { useNavBar } from "./navbar";
+import { useMeStore } from "./me";
+import { useNavBarStore } from "./navbar";
 const toast = useToast();
 
-export const useAuth = defineStore({
+export const useAuthStore = defineStore({
   id: "auth",
   state: () => ({
     // user: null as Partial<User> | null,
   }),
   getters: {
-    isLoggedIn: (): boolean => !!useMe().user,
+    isLoggedIn: (): boolean => !!useMeStore().user,
   },
   actions: {
     async login(email: string, password: string) {
@@ -30,8 +30,8 @@ export const useAuth = defineStore({
       try {
         // const res = await api.auth.authControllerLogin({ email, password });
         const res = await api.post("auth/login", { email, password });
-        useMe().user = res.data;
-        toast.success(`Hello ${useMe().user?.email}`);
+        useMeStore().user = res.data;
+        toast.success(`Hello ${useMeStore().user?.email}`);
         router.push("/");
       } catch (err) {
         console.log("err :>> ", err);
@@ -63,15 +63,15 @@ export const useAuth = defineStore({
       api
         .post("auth/logout")
         .then((res) => {
-          console.log("res :>> ", res);
+          // console.log("res :>> ", res);
         })
         .catch((err) => {
           console.log("there was an error err :>> ", err);
         })
         .finally(() => {
-          useMe().user = null;
+          useMeStore().user = null;
           router.replace("/");
-          useNavBar().close();
+          useNavBarStore().close();
           // toast.info(`Logged out`);
         });
     },

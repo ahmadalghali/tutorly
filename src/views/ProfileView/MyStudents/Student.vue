@@ -24,7 +24,7 @@ const fullName = computed(() => {
       </div>
     </span>
     <router-link
-      :to="{ name: 'chat', props: { withUser: student } }"
+      :to="{ name: 'chat', query: { withUserId: student.id } }"
       class="rounded-md text-blue-500 text-3xl"
     >
       <font-awesome-icon icon="message" />

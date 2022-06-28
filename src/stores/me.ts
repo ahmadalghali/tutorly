@@ -1,3 +1,4 @@
+import { UserRole } from "./../global/types";
 import { defineStore } from "pinia";
 import api from "@/services/api";
 import type {
@@ -6,17 +7,18 @@ import type {
   Student,
   Tutor,
   Admin,
-  Admin as AdminType,
 } from "@/global/api-types";
 import { useToast } from "vue-toastification";
 import router from "@/router";
 const toast = useToast();
-import { useAuth } from "./auth";
-
-export const useMe = defineStore({
+import { useAuthStore } from "./auth";
+interface State {
+  user: null | Student | Tutor;
+}
+export const useMeStore = defineStore({
   id: "me",
-  state: () => ({
-    user: null as unknown as null | User | Student | Tutor,
+  state: (): State => ({
+    user: null,
   }),
   getters: {},
   actions: {
@@ -26,12 +28,12 @@ export const useMe = defineStore({
       await api
         .get("me")
         .then((res) => {
-          this.user = res.data as Student;
-          console.log("res :>> ", res);
+          this.user = res.data;
+          // console.log("res :>> ", res);
         })
         .catch((err) => {
           console.log("err :>> ", err);
-          useAuth().logout();
+          useAuthStore().logout();
         });
     },
   },

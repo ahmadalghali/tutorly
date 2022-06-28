@@ -2,9 +2,12 @@
 import { computed } from "vue";
 
 const props = defineProps({
-  lesson: Object,
+  lesson: { type: Object, required: true },
 });
 
+console.log("lesson :>> ", props.lesson);
+
+// console.log("props.lesson :>> ", props.lesson);
 const tutorFullName = computed(() => {
   return `${props.lesson.tutor.firstname} ${props.lesson.tutor.lastname}`;
 });
@@ -29,7 +32,10 @@ const tutorFullName = computed(() => {
       </div>
     </span>
     <router-link
-      :to="{ name: 'chat', props: { withUser: lesson.tutor } }"
+      :to="{
+        name: 'chat',
+        query: { withUserId: lesson.tutor.id },
+      }"
       class="rounded-md text-blue-500 text-3xl"
     >
       <font-awesome-icon icon="message" />

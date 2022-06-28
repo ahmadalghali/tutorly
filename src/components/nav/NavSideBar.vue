@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { useAuth } from "@/stores/auth";
+import { useAuthStore } from "@/stores/auth";
 import { reactive, ref } from "vue";
 
-const authStore = useAuth();
+const authStore = useAuthStore();
 
 function displayLogoutModal() {
   // TODO show modal

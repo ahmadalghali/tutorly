@@ -9,10 +9,10 @@ import TermsAndConditionsView from "../views/TermsAndConditionsView.vue";
 import ChatView from "../views/ChatView.vue";
 import ProfileView from "../views/ProfileView/index.vue";
 import ModalBookingContactData from "@/components/modals/ModalBookingContactData.vue";
-import { useAuth } from "@/stores/auth";
+import { useAuthStore } from "@/stores/auth";
 
-import { useNavBar } from "@/stores/navbar";
-import { useMe } from "@/stores/me";
+import { useNavBarStore } from "@/stores/navbar";
+import { useMeStore } from "@/stores/me";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -31,11 +31,13 @@ const router = createRouter({
       path: "/login",
       name: "login",
       component: LoginView,
+      beforeEnter: () => !useAuthStore().isLoggedIn,
     },
     {
       path: "/register",
       name: "register",
       component: RegisterView,
+      beforeEnter: () => !useAuthStore().isLoggedIn,
     },
     {
       path: "/book",
@@ -55,9 +57,12 @@ const router = createRouter({
     {
       path: "/chat",
       name: "chat",
+      // component: () => import("@/views/ChatView.vue"),
       component: ChatView,
+      props: (route) => ({ withUserId: parseInt("" + route.query.withUserId) }),
       meta: {
         requiresAuth: true,
+        hideNavbar: true,
       },
     },
     {
@@ -77,9 +82,9 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to, from) => {
-  const authStore = useAuth();
-  const meStore = useMe();
-  const navbarStore = useNavBar();
+  const authStore = useAuthStore();
+  const meStore = useMeStore();
+  const navbarStore = useNavBarStore();
   navbarStore.close();
   // await meStore.getMe();
 

@@ -2,19 +2,24 @@
 import { onBeforeMount, onMounted, ref } from "vue";
 import { RouterLink, RouterView } from "vue-router";
 import NavBar from "./components/nav/NavBar.vue";
-import { useAuth } from "@/stores/auth";
-import { useMe } from "@/stores/me";
+import { useAuthStore } from "@/stores/auth";
+import { useMeStore } from "@/stores/me";
 
 // import { ModalsContainer } from "vue-final-modal";
 import { inject } from "vue";
+import { useChatStore } from "./stores/chat";
 const $vfm: any = inject("$vfm");
 
-const show = ref(false);
-const meStore = useMe();
+const show = $ref(false);
+const meStore = useMeStore();
 
 // function showLogoutModal() {
 //   $vfm.show({ component: "LogoutModal" });
 // }
+
+// setInterval(() => {
+//   // useChatStore().getMessagesWithUser()
+// })
 
 onBeforeMount(async () => {
   await meStore.getMe();
@@ -23,7 +28,7 @@ onBeforeMount(async () => {
 <template>
   <div>
     <div :class="$route.name === 'chat' ? '' : 'pb-20'">
-      <NavBar v-if="$route.path !== '/chat'" />
+      <NavBar v-if="!$route.meta.hideNavbar" />
       <RouterView class="router" :class="$route.name == 'chat' ? '' : 'px-4'" />
     </div>
     <modals-container></modals-container>

@@ -1,30 +1,29 @@
 <script setup lang="ts">
-import { useMe } from "@/stores/me";
+import { useMeStore } from "@/stores/me";
 import { storeToRefs } from "pinia";
 import { computed, reactive } from "vue";
 import MySubjects from "./MySubjects/index.vue";
 import MyStudents from "./MyStudents/index.vue";
 import { UserRole } from "@/global/types";
-const meStore = useMe();
+const meStore = useMeStore();
 
 const { user } = storeToRefs(meStore);
 
-console.log("user.value :>> ", user.value);
-console.log("user.value.role :>> ", user.value.role);
-
+// console.log("user.value :>> ", user.value);
+// console.log("user.value.role :>> ", user.value.role);
 const fullname = computed(() => {
-  return `${user.value.firstname} ${user.value.lastname}`;
+  return `${user.value?.firstname} ${user.value?.lastname}`;
 });
 </script>
 
 <template>
-  <Transition leave-active-class="animated slideOutLeft" appear>
+  <Transition v-if="user" leave-active-class="animated slideOutLeft" appear>
     <div class="profile">
       <div class="bio cardify">
         <div class="flex">
           <img
-            v-if="user?.profileImageUrl"
-            :src="user?.profileImageUrl"
+            v-if="user.profileImageUrl"
+            :src="user.profileImageUrl"
             class="object-cover items-center rounded-full h-20 w-20"
           />
           <img
@@ -45,6 +44,7 @@ const fullname = computed(() => {
       <MyStudents v-else-if="user.role === UserRole.TUTOR" />
     </div>
   </Transition>
+  <div v-else>Not Logged in</div>
 </template>
 
 <style></style>

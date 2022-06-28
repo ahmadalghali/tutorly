@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Input from "@/components/form/Input.vue";
-import { useAuth } from "@/stores/auth";
+import { useAuthStore } from "@/stores/auth";
 
 import { reactive, ref } from "vue";
 
@@ -10,7 +10,7 @@ const password = ref("a");
 const data = ref(null);
 const error = ref(null);
 
-const authStore = useAuth();
+const authStore = useAuthStore();
 
 function login() {
   if (email.value.trim() === "" || password.value.trim() === "")
