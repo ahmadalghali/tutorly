@@ -29,7 +29,10 @@ onBeforeMount(async () => {
   <div>
     <div :class="$route.name === 'chat' ? '' : 'pb-20'">
       <NavBar v-if="!$route.meta.hideNavbar" />
-      <RouterView class="router" :class="$route.name == 'chat' ? '' : 'px-4'" />
+      <RouterView
+        class="router mt-5"
+        :class="$route.name == 'chat' ? '' : 'px-4'"
+      />
     </div>
     <modals-container></modals-container>
   </div>
