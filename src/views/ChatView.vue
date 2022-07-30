@@ -19,7 +19,7 @@ const chatStore = useChatStore();
 const meStore = useMeStore();
 let message = $ref("");
 let lastDateStamp = "";
-let listOfUniqueMessageDates = $ref<string[]>([]);
+// let listOfUniqueMessageDates = $ref<string[]>([]);
 
 onBeforeMount(() => {
   watch(
@@ -31,64 +31,52 @@ onBeforeMount(() => {
 
 async function initChat() {
   withUser = await (await api.get("/users/" + props.withUserId)).data;
-  getChatMessages();
+  await chatStore.getMessagesWithUser(props.withUserId);
+  scrollToBottomChat();
 }
 
 async function getChatMessages() {
   await chatStore.getMessagesWithUser(props.withUserId);
+  scrollToBottomChat({ smooth: true });
 }
 
-onUpdated(() => {
-  // chatContainer = document.getElementById("chatContainer");
-  scrollToBottomChat();
-});
+// onUpdated(() => {
+//   // chatContainer = document.getElementById("chatContainer");
+// });
 
 // setInterval(() => {
 //   getChatMessages();
-// }, 5000);
+// }, 1000);
 
 const fullName = computed(
   () => `${withUser?.firstname} ${withUser?.lastname}` || ""
 );
 
-function sendMessage() {
-  scrollToBottomChat();
-  return;
+async function sendMessage() {
   const trimmedMessage = message.trim();
   if (trimmedMessage.length > 0) {
     message = "";
 
-    chatStore.sendMessage({
+    await chatStore.sendMessage({
       receiverId: +props.withUserId,
       text: trimmedMessage,
     });
+    scrollToBottomChat({ smooth: true });
   }
 }
-function scrollToBottomChat() {
-  console.log("chatContainer :>> ", chatContainer);
-  // setTimeout(() => {
-  chatContainer.scroll({
-    behavior: "smooth",
-    top: chatContainer.scrollHeight,
-  });
-  // }, 200);
-}
 
-// const getFormattedDateOfMessage = (message: MessageType) => {
-//   let dateStamp = moment(message.createdAt).format("ll");
-//   // isNewDate = (lastDateStamp && lastDateStamp != dateStamp) || false;
-//   if (!listOfUniqueMessageDates.includes(dateStamp)) {
-//     listOfUniqueMessageDates.push(dateStamp);
-//   }
-//   // lastDateStamp = dateStamp;
-//   return dateStamp;
-// };
-// function displayFormattedDateOfMessage(message: MessageType) {
-//   const formattedDate = getFormattedDateOfMessage(message);
-//   listOfUniqueMessageDates.push(formattedDate);
-//   console.log("displayFormattedDateOfMessage formattedDate:>> ", formattedDate);
-//   return formattedDate;
-// }
+function scrollToBottomChat(options?: { smooth?: boolean }) {
+  if (options?.smooth) {
+    window.scroll({
+      behavior: "smooth",
+      top: document.body.scrollHeight,
+    });
+  } else {
+    window.scroll({
+      top: document.body.scrollHeight,
+    });
+  }
+}
 
 function isNewDay(messageCreatedAt: string): boolean {
   let date = moment(messageCreatedAt).format("ll");
@@ -97,20 +85,10 @@ function isNewDay(messageCreatedAt: string): boolean {
     return true;
   }
   return false;
-  // const date = moment(messageCreatedAt).format("ll");
-  // if (!listOfUniqueMessageDates.includes(date)) {
-  //   listOfUniqueMessageDates.push(date);
-  //   return true;
-  // }
-  // return false;
 }
 </script>
 <template>
-  <div
-    v-if="withUser"
-    class="chat bg-white flex flex-col h-screen w-screen relative"
-    @keyup.enter="sendMessage"
-  >
+  <div v-if="withUser" class="bg-white" @keyup.enter="sendMessage">
     <div class="flex p-4 bg-teal-500 text-white fixed top-0 left-0 right-0">
       <font-awesome-icon
         icon="arrow-left"
@@ -119,19 +97,17 @@ function isNewDay(messageCreatedAt: string): boolean {
       />
       <div class="text-center text-2xl ml-5">{{ fullName }}</div>
     </div>
-    <div ref="chatContainer" class="pb-24 pt-20">
+    <div ref="chatContainer" class="pb-24 pt-20 overflow-scroll">
       <div
         v-for="message in chatStore.messages"
         :key="message.id"
-        class="flex flex-col px-4 py-1 overflow-scroll mb-auto overscroll-auto space-y-5"
+        class="flex flex-col px-4 py-1 space-y-5"
       >
         <div
           v-if="isNewDay(message.createdAt!)"
           class="px-3 py-1 w-1/3 rounded-lg bg-blue-100 text-center text-gray-600 place-self-center"
         >
-          <p>
-            {{ moment(message.createdAt).format("ll") }}
-          </p>
+          {{ moment(message.createdAt).format("ll") }}
         </div>
         <Message
           :message="message"
@@ -165,11 +141,4 @@ function isNewDay(messageCreatedAt: string): boolean {
   </div>
 </template>
 
-<style scoped>
-.chat {
-  --animate-duration: 0.4s;
-}
-/* .chat-container {
-        height: 36rem;
-    } */
-</style>
+<style></style>
