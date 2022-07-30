@@ -11,7 +11,8 @@ const navbarStore = useNavBarStore();
   <div class="navbar px-10 py-4 flex items-center justify-between">
     <div class="flex items-center brand" @click="$router.push('/')">
       <!-- <i class="logo text-4xl fas fa-graduation-cap  mr-2"></i> -->
-      <img src="@/assets/logo-trans.png" class="h-16" />
+      <!-- <img src="@/assets/logo2.png" class="h-16" /> -->
+      <h1 class="text-4xl font-extrabold text-teal-500">Tutorly</h1>
       <!-- <p class="font-semibold text-2xl">LTA</p> -->
     </div>
     <div class="mb-10 mr-5">
