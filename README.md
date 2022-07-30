@@ -10,42 +10,53 @@ This project is currently in development but can still be tested and you're more
 ### https://tutorly-app.netlify.app
 
 ### Login details
-email: `john.doe@gmail.com`
+email: `student@tutorly.com`
 <br> 
 password: `password`
+
+email: `tutor@tutorly.com`
+<br> 
+password: `password`
+
 
 A user can login and chat to their assigned tutor. Functionality to book a lesson and and WebSocket implementation for chat is in progress.
 
 ## Project Screen Shots &nbsp; :camera_flash:
+
  
 <table >
   <tr>
     <td valign="top">
-      <img src="https://user-images.githubusercontent.com/60392502/181669726-2d003be4-d9d0-454a-baea-9738f7506c46.png">
+      <img src="https://user-images.githubusercontent.com/60392502/181919134-deb9655b-038d-4d39-813b-2369ab5194f8.png">
     </td>
     <td valign="top">
-      <img  alt="Screenshot 2022-07-29 at 03 29 06" src="https://user-images.githubusercontent.com/60392502/181670280-636b4937-d98b-4299-ad89-c465d9867831.png">
+    <img alt="Screenshot 2022-07-29 at 03 25 46" src="https://user-images.githubusercontent.com/60392502/181919147-02348767-a06b-44cd-b380-6e2b6bf91f0a.png">
     </td>
     <td valign="top">
-    <img alt="Screenshot 2022-07-29 at 03 26 13" src="https://user-images.githubusercontent.com/60392502/181670149-1d416b38-2ded-4db0-b3fa-52b19bf669c7.png">
+      <img  alt="Screenshot 2022-07-29 at 03 29 06" src="https://user-images.githubusercontent.com/60392502/181919140-e3d28901-1a80-44d2-8d4e-ea252f4652be.png">
     </td>
+    <td valign="top">
+      <img alt="Screenshot 2022-07-29 at 03 26 13" src="https://user-images.githubusercontent.com/60392502/181919141-e65b46dc-e87c-467d-a23f-a2b79fc2d359.png">
+    </td>
+    
     
   </tr>
   <tr>
   <td valign="top">
-    <img  alt="Screenshot 2022-07-29 at 03 25 23" src="https://user-images.githubusercontent.com/60392502/181670140-d695eba0-1181-43bc-979b-53111bb5a573.png">
+      <img alt="Screenshot 2022-07-29 at 03 26 13" src="https://user-images.githubusercontent.com/60392502/181919143-97765a18-e4bb-4a8e-897d-e3654cefe038.png">
     </td>
     <td valign="top">
-    <img alt="Screenshot 2022-07-29 at 03 25 46" src="https://user-images.githubusercontent.com/60392502/181670147-caae4892-06e9-4ae2-a030-c87e0523de47.png">
+      <img src="https://user-images.githubusercontent.com/60392502/181919150-e5f431f1-7f1f-458e-a6dc-b585efa561f3.png" >
     </td>
     <td valign="top">
-      <img src="https://user-images.githubusercontent.com/60392502/181667749-5f118d6a-4674-49c8-bf28-541755549a37.jpg" >
+      <img src="https://user-images.githubusercontent.com/60392502/181919152-7ef43308-c7bd-41fe-97be-bbbbdcc687ec.png">
     </td>
     <td valign="top">
-      <img src="https://user-images.githubusercontent.com/60392502/181667744-e65a5326-c0e2-4342-90a9-aff83936b001.jpg">
+      <img src="https://user-images.githubusercontent.com/60392502/181919629-d77ef985-4626-4626-ac75-eba95746ca5e.png">
     </td>
   </tr>
 </table>
+
 
 ## Website URL + Installation and Setup Instructions &nbsp; :technologist:
 
