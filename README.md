@@ -1,4 +1,4 @@
-## Tuition Academy Web Application &nbsp; :teacher: :iphone:
+## Tutorly &nbsp; :teacher: :iphone:
 
 An application for tuition academies to manage tutors and students with livechat and lesson booking features, built with <strong>Nest.js (Node.js), TypeScript, Vue 3, Pinia State Management and Tailwindcss</strong>.
 
