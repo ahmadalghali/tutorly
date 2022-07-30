@@ -1,12 +1,22 @@
-## Tutorly &nbsp; :teacher: :iphone:
+# Tutorly &nbsp; :teacher: :iphone:
 
 An application for tuition academies to manage tutors and students with livechat and lesson booking features, built with <strong>Nest.js (Node.js), TypeScript, Vue 3, Pinia State Management and Tailwindcss</strong>.
 
+<br>
+
 ## Project Status &nbsp; :green_circle:
 
-This project is currently in development but can still be tested and you're more than welcome to give it a walkthrough <strong><WEBSITE LINK> with email:<EMAIL> and password: <PASSWORD></strong>. User can login and chat to assigned to their assigned tutor. Functionality to book a lesson and and websocket implementation for chat is in progress.
+This project is currently in development but can still be tested and you're more than welcome to give it a walkthrough on <br>
+### https://tutorly-app.netlify.app
 
-## Project Screen Shot(s) &nbsp; :camera_flash:
+### Login details
+email: `john.doe@gmail.com`
+<br> 
+password: `password`
+
+A user can login and chat to their assigned tutor. Functionality to book a lesson and and WebSocket implementation for chat is in progress.
+
+## Project Screen Shots &nbsp; :camera_flash:
  
 <table >
   <tr>
@@ -37,9 +47,10 @@ This project is currently in development but can still be tested and you're more
   </tr>
 </table>
 
-## Website URL + Installation and Setup Instructions
+## Website URL + Installation and Setup Instructions &nbsp; :technologist:
 
-You can view the project here: <strong><PROJECT LINK></strong>
+To Visit App: 
+<strong>https://tutorly-app.netlify.app</strong>
 
 or you can optionally follow the steps below to install it locally on your machine:
 
@@ -51,16 +62,12 @@ Installation:
 
 To Start Server:
 
-`npm run dev`  
+`npm run dev`    
 
-To Visit App:
+## Reflection &nbsp; 	:thought_balloon:
 
-`http://localhost:3000`  
+The inspiration behind this project is from a friend of mine who has a small tutoring academy and they needed a web application to automate repetitive tasks, implement a lesson booking feature and chat functionality between students and tutors, I thought it would be a great challenge for myself to try solve a real world business problem whilst practicing the technologies that I love to work with, fullstack JavaScript/TypeScript.
 
-## Reflection
+Some of the main challenges I ran into were Authentication and WebSockets, which took patience and practice to understand, I'm really glad I pushed myself to take this opportunity because it really made me dive into all aspects of developing a project end-to-end.
 
-The inspiration behind this project is a friend of mine who has a small tuition academy and they needed a web application to automate repetitive tasks, implement lesson booking feature and chat functionality between students and tutors, I thought it would be a great challenge for myself to try solve a real world business problem whilst practicing the technologies that I love to work with, Node.js and Vue.js.
-
-Some of the main challenges I ran into were Authentication and WebSockets, which took patience and practice to understand, I'm really glad I pushed myself to take this opportunity because it really made me dive into all aspects of developing a fullstack project.
-
-At the end of the day, the technologies implemented in this project are <strong>Nest.js (Node.js), TypeScript, Vue 3, Pinia State Management and Tailwindcss</strong>. In my next project I am looking forward to build an application with <strong>Node.js and React</strong> to get understand the differences between React and Vue on a better level.
+The technologies implemented in this project are <strong>Nest.js (Node.js), TypeScript, Vue 3, Pinia State Management and Tailwindcss</strong>. In my next project I am looking forward to build an application with <strong>Node.js and React</strong> to explore the differences between React and Vue on a deeper level.
