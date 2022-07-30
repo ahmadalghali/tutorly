@@ -20,16 +20,12 @@ async function login() {
   const res = await authStore.login(email.value, password.value);
   console.log("res", res);
 
-  if (res.status === 200 || res.status === 201) {
+  if (res.status == 200 || res.status == 201) {
     useMeStore().user = res.data;
     toast.success(`Hello ${useMeStore().user?.firstname}`);
     router.push("/");
   } else {
-    if (res.status === 401) {
-      toast.error("Invalid email or password");
-    } else {
-      toast.error("Login failed");
-    }
+    // investigate... errors are being handled in store catch block
   }
 }
 

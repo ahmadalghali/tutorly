@@ -31,8 +31,8 @@ export const useAuthStore = defineStore({
         const res = await api.post("auth/login", { email, password });
         return res;
       } catch (err) {
-        console.log(err);
-        toast.error("Something went wrong, please try again later");
+        // console.log("err", err);
+        toast.error(err.message);
       }
 
       // res.catch((err) => {
