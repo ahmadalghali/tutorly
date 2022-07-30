@@ -1,5 +1,5 @@
 {
-  "name": "london-tuition-academy",
+  "name": "Tutorly",
   "version": "0.0.0",
   "scripts": {
     "generate:dtos": "npx swagger-typescript-api -p http://localhost:3001/docs-json -o ./src/global -n api-types.ts --axios  --module-name-first-tag --responses --route-types ",
