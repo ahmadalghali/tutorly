@@ -27,8 +27,13 @@ export const useAuthStore = defineStore({
     async login(email: string, password: string) {
       // console.log("Logging in...");
 
-      const res = await api.post("auth/login", { email, password });
-      return res;
+      try {
+        const res = await api.post("auth/login", { email, password });
+        return res;
+      } catch (err) {
+        console.log(err);
+        toast.error("Something went wrong, please try again later");
+      }
 
       // res.catch((err) => {
       //   console.log("err :>> ", err);
