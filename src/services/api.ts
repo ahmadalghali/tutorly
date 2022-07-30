@@ -36,7 +36,7 @@ function handleResponseStatus(status: number) {
 
 // export default axiosInstance;
 
-const BASE_URL = import.meta.env.VITE_LTA_API_URL;
+const BASE_URL = import.meta.env.VITE_TUTORLY_API_URL;
 // const authStore = useAuthStore();
 // const axiosInstance = axios.create({
 //   baseURL: BASE_URL,
