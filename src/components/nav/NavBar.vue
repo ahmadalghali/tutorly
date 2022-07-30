@@ -11,7 +11,8 @@ const navbarStore = useNavBarStore();
 
 <template>
   <div class="sticky">
-    <NavTopBar />
+    <NavTopBar class="" />
+    <!-- TODO: Make NavBar Always fixed on top of page when scrolling -->
   </div>
   <NavSideBar v-show="navbarStore.isOpen" class="absolute right-0 z-50" />
 </template>

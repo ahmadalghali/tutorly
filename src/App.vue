@@ -31,7 +31,7 @@ onBeforeMount(async () => {
       <NavBar v-if="!$route.meta.hideNavbar" />
       <RouterView
         class="router mt-5"
-        :class="$route.name == 'chat' ? '' : 'px-4'"
+        :class="$route.name == 'chat' ? '' : 'px-6'"
       />
     </div>
     <modals-container></modals-container>
@@ -40,7 +40,7 @@ onBeforeMount(async () => {
 
 <style>
 body {
-  /* @apply bg-gray-100; */
+  @apply bg-gray-100;
 }
 
 input {

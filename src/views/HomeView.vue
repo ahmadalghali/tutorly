@@ -9,7 +9,7 @@
         <img
           class="lg:w-2/6 md:w-3/6 w-5/6 object-cover object-center rounded"
           alt="hero"
-          src="../assets/hero.jpg"
+          src="../assets/hero-trans.png"
         />
         <div class="text-center lg:w-2/3 w-full">
           <h1
@@ -31,7 +31,7 @@
               Get a quote
             </button>
             <button
-              class="ml-4 inline-flex text-gray-700 bg-gray-100 border-0 py-2 px-6 focus:outline-none hover:bg-gray-200 rounded text-lg"
+              class="ml-4 inline-flex text-gray-600 bg-gray-300 border-0 py-2 px-6 focus:outline-none hover:bg-gray-200 rounded text-lg"
               @click="$router.push('/about')"
             >
               Learn more

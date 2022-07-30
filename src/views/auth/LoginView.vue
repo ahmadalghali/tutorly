@@ -22,8 +22,7 @@ async function login() {
 
   if (res.status == 200 || res.status == 201) {
     useMeStore().user = res.data;
-    toast.success(`Hello ${useMeStore().user?.firstname}`);
-    router.push("/");
+    router.push("/profile");
   } else {
     // investigate... errors are being handled in store catch block
   }
