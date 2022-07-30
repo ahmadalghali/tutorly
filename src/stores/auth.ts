@@ -27,15 +27,8 @@ export const useAuthStore = defineStore({
     async login(email: string, password: string) {
       // console.log("Logging in...");
 
-      try {
-        // const res = await api.auth.authControllerLogin({ email, password });
-        const res = await api.post("auth/login", { email, password });
-        useMeStore().user = res.data;
-        toast.success(`Hello ${useMeStore().user?.email}`);
-        router.push("/");
-      } catch (err) {
-        console.log("err :>> ", err);
-      }
+      const res = await api.post("auth/login", { email, password });
+      return res;
 
       // res.catch((err) => {
       //   console.log("err :>> ", err);
@@ -77,7 +70,8 @@ export const useAuthStore = defineStore({
     },
     async register(createStudentDto: CreateStudentDto) {
       // const res = await api.auth.authControllerRegister(createStudentDto);
-      const res = await api.post("register", createStudentDto);
+      const res = await api.post("/auth/register", createStudentDto);
+      return res;
     },
   },
 });

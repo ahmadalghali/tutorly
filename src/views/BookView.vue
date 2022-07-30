@@ -255,6 +255,11 @@
 </template>
 
 <script setup lang="ts">
+import { useToast } from "vue-toastification";
+
+function matchMe() {
+  useToast().info("Feature coming soon!", { timeout: 5000 });
+}
 // function matchMe () {
 // 	if (this.$loggedIn) {
 // 		console.log("Booking...");

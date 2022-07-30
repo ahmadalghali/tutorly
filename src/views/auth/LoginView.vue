@@ -1,24 +1,36 @@
 <script setup lang="ts">
 import Input from "@/components/form/Input.vue";
 import { useAuthStore } from "@/stores/auth";
+import { useMeStore } from "@/stores/me";
 
 import { reactive, ref } from "vue";
+import { useRouter } from "vue-router";
+import { useToast } from "vue-toastification";
 
-const email = ref("admin@lta.com");
-const password = ref("a");
-
-const data = ref(null);
-const error = ref(null);
+const router = useRouter();
+const toast = useToast();
+const email = ref("john.doe@gmail.com");
+const password = ref("password");
 
 const authStore = useAuthStore();
 
-function login() {
+async function login() {
   if (email.value.trim() === "" || password.value.trim() === "")
     return console.log("Email or password cannot be empty");
-  authStore.login(email.value, password.value);
+  const res = await authStore.login(email.value, password.value);
+  console.log("res", res);
 
-  // data.value = data.value
-  // error.value = error.value
+  if (res.status === 200 || res.status === 201) {
+    useMeStore().user = res.data;
+    toast.success(`Hello ${useMeStore().user?.firstname}`);
+    router.push("/");
+  } else {
+    if (res.status === 401) {
+      toast.error("Invalid email or password");
+    } else {
+      toast.error("Login failed");
+    }
+  }
 }
 
 function displayForgotPasswordModal() {
