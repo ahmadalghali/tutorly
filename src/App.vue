@@ -30,7 +30,7 @@ onBeforeMount(async () => {
     <div :class="$route.name === 'chat' ? '' : 'pb-20'">
       <NavBar v-if="!$route.meta.hideNavbar" />
       <RouterView
-        class="router mt-5"
+        class="router mt-5 md:max-w-2xl mx-auto"
         :class="$route.name == 'chat' ? '' : 'px-6'"
       />
     </div>
