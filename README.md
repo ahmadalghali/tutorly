@@ -4,21 +4,6 @@ An application for tuition academies to manage tutors and students with livechat
 
 <br>
 
-## Project Status &nbsp; :green_circle:
-
-This project is currently in development but can still be tested and you're more than welcome to give it a walkthrough on <br>
-### https://tutorly-app.netlify.app
-
-### Login details
-email: `student@tutorly.com`
-<br> 
-password: `password`
-
-email: `tutor@tutorly.com`
-<br> 
-password: `password`
-
-
 A user can login and chat to their assigned tutor. Functionality to book a lesson and and WebSocket implementation for chat is in progress.
 
 ## Project Screen Shots &nbsp; :camera_flash:
@@ -57,23 +42,6 @@ A user can login and chat to their assigned tutor. Functionality to book a lesso
   </tr>
 </table>
 
-
-## Website URL + Installation and Setup Instructions &nbsp; :technologist:
-
-To Visit App: 
-<strong>https://tutorly-app.netlify.app</strong>
-
-or you can optionally follow the steps below to install it locally on your machine:
-
-Clone down this repository. You will need `node` and `npm` installed globally on your machine.  
-
-Installation:
-
-`npm install`   
-
-To Start Server:
-
-`npm run dev`    
 
 ## Reflection &nbsp; 	:thought_balloon:
 
