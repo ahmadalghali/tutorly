@@ -4,8 +4,6 @@ An application for tuition academies to manage tutors and students with livechat
 
 <br>
 
-A user can login and chat to their assigned tutor. Functionality to book a lesson and and WebSocket implementation for chat is in progress.
-
 ## Project Screen Shots &nbsp; :camera_flash:
 
  
